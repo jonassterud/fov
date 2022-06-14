@@ -1,0 +1,10 @@
+[package]
+name = "dnb-api"
+version = "0.1.0"
+authors = ["Jonas Mathisrud Sterud <jonas.sterud@gmail.com>"]
+description = "Library to interact with the DNB API"
+repository = "https://github.com/jonassterud/fov"
+license = "MIT"
+edition = "2021"
+
+[dependencies]

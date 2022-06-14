@@ -1,0 +1,13 @@
+[workspace]
+members = ["crates/*"]
+
+[package]
+name = "fov"
+version = "0.1.0"
+authors = ["Jonas Mathisrud Sterud <jonas.sterud@gmail.com>"]
+description = "Get an overview of your finances."
+repository = "https://github.com/jonassterud/fov"
+license = "MIT"
+edition = "2021"
+
+[dependencies]
