@@ -1,4 +1,4 @@
-![FOV](assets/logo/cover.png)
+![FOV](media/logo/cover.png)
 
 ## About
 *FOV* is an application to help you get an overview of your finances, by combining data from different platforms. Currently, the main goal is to implement support for [DNB](https://www.dnb.no/), [Nordnet](https://www.nordnet.no/no) and [Coinbase Pro](https://pro.coinbase.com/) using their APIs.
