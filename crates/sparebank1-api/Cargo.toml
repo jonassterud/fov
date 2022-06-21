@@ -1,14 +1,10 @@
-[workspace]
-members = ["crates/*"]
-
 [package]
-name = "fov"
+name = "sparebank1-api"
 version = "0.1.0"
 authors = ["Jonas Mathisrud Sterud <jonas.sterud@gmail.com>"]
-description = "Get an overview of your finances."
+description = "Library to interact with the SpareBank 1 API"
 repository = "https://github.com/jonassterud/fov"
 license = "MIT"
 edition = "2021"
 
 [dependencies]
-tokio = { version = "1.19.2", features = ["full"] }
