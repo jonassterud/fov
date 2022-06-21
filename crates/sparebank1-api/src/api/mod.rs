@@ -1,7 +1,7 @@
 mod models;
 
 use anyhow::{anyhow, Result};
-use models::*;
+use models::accounts::*;
 
 pub struct SpareBank1 {
     pub client: reqwest::Client,
@@ -45,7 +45,7 @@ impl SpareBank1 {
 
     pub async fn get_account(&self) -> Result<AccountDTO> {}
 
-    pub async fn get_account_roles(&self) -> Result<AccountRoles> {}
+    pub async fn get_account_roles(&self) -> Result<AccountRolesDTO> {}
 
     pub async fn get_accounts(&self) -> Result<AccountsDTO> {
         let url = "https://api.sparebank1.no/personal/banking/accounts";
