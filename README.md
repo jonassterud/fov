@@ -1,10 +1,17 @@
 ![FOV](media/logo/cover.png)
 
 ## About
-*FOV* is an application to help you get an overview of your finances, by combining data from different platforms. Currently, the main goal is to implement support for [DNB](https://www.dnb.no/), [Nordnet](https://www.nordnet.no/no) and [Coinbase Pro](https://pro.coinbase.com/) using their APIs.
+*FOV* is an application to help you get an overview of your finances, by combining data from different platforms. Currently, the main goal is to implement support for [SpareBank 1](https://www.sparebank1.no), [Nordnet](https://www.nordnet.no/no) and [Coinbase Pro](https://pro.coinbase.com/) using their APIs.
 
 ## Installation
 You can download the application from the [releases](https://github.com/jonassterud/fov/releases) section here on GitHub.
+
+## Configuration
+For the application to get access to your financial data, you need to add the access tokens in a file called `secrets.toml`. These tokens will allow this program to get almost full control over the different platforms. Here is how the file is supposed to be structured:
+```toml
+sparebank1_access_token = "<YOUR ACCESS TOKEN>"
+sparebank1_refresh_token = "<YOUR REFRESH TOKEN>"
+```
 
 ## Contributing
 Feel free to contribute!

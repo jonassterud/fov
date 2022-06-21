@@ -714,6 +714,12 @@ dependencies = [
 [[package]]
 name = "sparebank1-api"
 version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "reqwest",
+ "serde",
+ "tokio",
+]
 
 [[package]]
 name = "syn"

@@ -17,11 +17,11 @@ impl Nordnet {
             let schema = resp.json::<schema::Status>().await?;
 
             if schema.system_running {
-                let nordnet_struct = Nordnet {
-                    client: client,
-                };
+                let nordnet_struct = Nordnet { client: client };
 
-                nordnet_struct.login(username, password, schema.timestamp).await?;
+                nordnet_struct
+                    .login(username, password, schema.timestamp)
+                    .await?;
 
                 Ok(nordnet_struct)
             } else {
@@ -43,7 +43,12 @@ impl Nordnet {
 
         let url = "https://www.nordnet.se/api/2/login";
 
-        let mut auth = format!("{}:{}:{}", base64::encode(username), base64::encode(password), base64::encode(timestamp.to_string()));
+        let mut auth = format!(
+            "{}:{}:{}",
+            base64::encode(username),
+            base64::encode(password),
+            base64::encode(timestamp.to_string())
+        );
         todo!("encode");
         todo!("base64 again");
 
