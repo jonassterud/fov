@@ -12,3 +12,8 @@ edition = "2021"
 
 [dependencies]
 tokio = { version = "1.19.2", features = ["full"] }
+serde = { version = "1.0.137", features = ["derive"] }
+anyhow = "1.0.57"
+toml = "0.5.9"
+sparebank1-api = { path = "crates/sparebank1-api" }
+coinbase-pro-api = { path = "crates/coinbase-pro-api" }
