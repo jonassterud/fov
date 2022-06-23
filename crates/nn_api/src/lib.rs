@@ -1,2 +1,2 @@
-mod tests;
 mod api;
+mod tests;
