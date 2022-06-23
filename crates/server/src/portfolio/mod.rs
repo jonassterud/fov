@@ -34,24 +34,11 @@ impl Portfolio {
 
     pub async fn add_coinbase_pro_accounts(
         &mut self,
-        accounts: Vec<cb::Account>,
-        coinbase_pro_api: &cb::CoinbasePro,
+        accounts: Vec<cb::accounts::Account>,
     ) -> Result<()> {
         for account in accounts {
             if (account.balance.parse::<f64>()?) > 0.0 {
-                let currency = account.currency.clone();
-
-                let mut simple_account = SimpleAccount::try_from(account)?;
-
-                // Transform balance from crypto amount into NOK
-                let ticker = coinbase_pro_api
-                    .get_product_ticker(&format!("{}-USD", currency))
-                    .await?;
-                let USDNOK = 10.0;
-                let balance = (ticker.price.parse::<f64>()?) * USDNOK;
-
-                simple_account.balance = balance;
-
+                let simple_account = SimpleAccount::try_from(account)?;
                 self.coinbase_pro_accounts.push(simple_account);
             }
         }

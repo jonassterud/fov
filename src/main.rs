@@ -1,8 +1,6 @@
-mod portfolio;
-
 use coinbase_pro_api::*;
-use portfolio::Portfolio;
 use serde::Deserialize;
+use server::{self, Portfolio};
 use sparebank1_api::*;
 
 #[derive(Debug, Deserialize)]
@@ -36,10 +34,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     let coinbase_pro_accounts = coinbase_pro.get_accounts().await?;
 
     portfolio
-        .add_coinbase_pro_accounts(coinbase_pro_accounts, &coinbase_pro)
+        .add_coinbase_pro_accounts(coinbase_pro_accounts)
         .await?;
 
+    // Start server
+    server::start(portfolio).await?;
 
-    println!("{:?}", portfolio);
     Ok(())
 }

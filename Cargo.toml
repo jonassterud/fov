@@ -17,3 +17,4 @@ anyhow = "1.0.57"
 toml = "0.5.9"
 sparebank1-api = { path = "crates/sparebank1-api" }
 coinbase-pro-api = { path = "crates/coinbase-pro-api" }
+server = { path = "crates/server" }

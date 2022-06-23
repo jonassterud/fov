@@ -1,8 +1,9 @@
 use anyhow::{anyhow, Result};
 use coinbase_pro_api as cb;
+use serde::Serialize;
 use sparebank1_api as spb;
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Serialize)]
 pub struct SimpleAccount {
     pub name: String,
     pub description: String,
@@ -36,15 +37,15 @@ impl TryFrom<spb::AccountDTO> for SimpleAccount {
     }
 }
 
-impl TryFrom<cb::Account> for SimpleAccount {
+impl TryFrom<cb::accounts::Account> for SimpleAccount {
     type Error = anyhow::Error;
 
-    fn try_from(item: cb::Account) -> Result<Self> {
+    fn try_from(item: cb::accounts::Account) -> Result<Self> {
         Ok(SimpleAccount {
-            name: item.currency,
+            name: item.currency.clone(),
             description: "".to_string(),
             balance: item.balance.parse::<f64>()?,
-            currency_code: "NOK".to_string(),
+            currency_code: item.currency,
         })
     }
 }

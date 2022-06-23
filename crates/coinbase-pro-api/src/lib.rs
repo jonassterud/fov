@@ -1,3 +1,3 @@
 mod api;
 
-pub use api::{models::Account, CoinbasePro};
+pub use api::{models::*, CoinbasePro};
