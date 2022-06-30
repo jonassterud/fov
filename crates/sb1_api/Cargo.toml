@@ -8,4 +8,5 @@ license = "MIT"
 edition = "2021"
 
 [dependencies]
+serde = { version = "1.0.137", features = ["derive"] }
 anyhow = "1.0.57"
