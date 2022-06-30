@@ -1,4 +1,4 @@
-// Models for Accounts API
+// Models for the SpareBank 1 Accounts API
 // https://developer.sparebank1.no/#/api/2682DF86994D4B348363BE9AC4644EFC
 
 use std::collections::HashMap;
@@ -54,7 +54,7 @@ pub struct AccountPropertiesDTO {
 
 pub struct AccountsDTO {
     pub accounts: Option<Vec<AccountDTO>>,
-    links_dto. Option<LinksDTO>,
+    pub links_dto: Option<LinksDTO>,
 }
 
 pub struct CustomerDTO {
@@ -67,9 +67,7 @@ pub struct CustomerDTO {
     pub organisation_number: Option<String>,
 }
 
-pub struct LinksDTO {
-
-}
+pub struct LinksDTO {}
 
 /*
 pub struct Number {
@@ -104,18 +102,18 @@ pub struct AccountBalanceRequestDTO {
     pub account_number: Option<String>,
 }
 
-pub AccountRoleDTO {
+pub struct AccountRoleDTO {
     pub role_type: Option<String>,
     pub valid_from_date: Option<String>,
     pub valid_to_date: Option<String>,
 }
 
-pub AccountRolesDTO {
+pub struct AccountRolesDTO {
     pub roles: Option<Vec<AccountRoleDTO>>,
     pub owner_has_right_of_disposal: Option<bool>,
 }
 
-pub AccountKeysDTO {
+pub struct AccountKeysDTO {
     pub account_keys_map: Option<HashMap<String, String>>,
 }
 
