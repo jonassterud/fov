@@ -3,16 +3,18 @@ mod portfolio;
 use anyhow::Result;
 use portfolio::Portfolio;
 use warp::Filter;
+use shared::Config;
 
-#[derive(Debug)]
 pub struct Server {
     portfolio: Portfolio,
+    config: Config,
 }
 
 impl Server {
-    pub fn new() -> Server {
+    pub fn new(config: Config) -> Server {
         Server {
             portfolio: Portfolio::new(),
+            config: config,
         }
     }
 

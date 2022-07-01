@@ -202,6 +202,7 @@ dependencies = [
  "anyhow",
  "serde",
  "server",
+ "shared",
  "tokio",
  "toml",
 ]
@@ -967,7 +968,9 @@ dependencies = [
 name = "shared"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
  "serde",
+ "toml",
 ]
 
 [[package]]

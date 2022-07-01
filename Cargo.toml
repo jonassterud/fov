@@ -11,6 +11,7 @@ license = "MIT"
 edition = "2021"
 
 [dependencies]
+shared = { path = "crates/shared" }
 server = { path = "crates/server" }
 tokio = { version = "1.19.2", features = ["full"] }
 serde = { version = "1.0.137", features = ["derive"] }

@@ -1,11 +1,6 @@
 mod tests;
+mod config;
+mod asset;
 
-use serde::Serialize;
-
-#[derive(Debug, Serialize, Clone)]
-pub struct Asset {
-    pub name: String,
-    pub description: Option<String>,
-    pub balance: f64,
-    pub currency: String,
-}
+pub use config::Config;
+pub use asset::Asset;
