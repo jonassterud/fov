@@ -3,7 +3,7 @@ use serde::Deserialize;
 
 #[derive(Deserialize)]
 pub struct Config {
-    sb1_access_token: String,
+    pub sb1_access_token: String,
     // ...
 }
 

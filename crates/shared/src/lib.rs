@@ -1,6 +1,6 @@
-mod tests;
-mod config;
 mod asset;
+mod config;
+mod tests;
 
-pub use config::Config;
 pub use asset::Asset;
+pub use config::Config;
