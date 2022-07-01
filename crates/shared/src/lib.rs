@@ -1,6 +1,8 @@
+mod tests;
+
 use serde::Serialize;
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, Clone)]
 pub struct Asset {
     pub name: String,
     pub description: Option<String>,

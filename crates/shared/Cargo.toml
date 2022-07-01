@@ -1,12 +1,11 @@
 [package]
-name = "cbp_api"
+name = "shared"
 version = "0.1.0"
 authors = ["Jonas Mathisrud Sterud <jonas.sterud@gmail.com>"]
-description = "Get an overview of your finances - Coinbase Pro API crate."
+description = "Get an overview of your finances - shared crate."
 repository = "https://github.com/jonassterud/fov"
 license = "MIT"
 edition = "2021"
 
 [dependencies]
-shared = { path = "../shared" }
-anyhow = "1.0.57"
+serde = { version = "1.0.137", features = ["derive"] }

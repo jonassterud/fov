@@ -8,6 +8,7 @@ license = "MIT"
 edition = "2021"
 
 [dependencies]
+shared = { path = "../shared" }
 cbp_api = { path = "../cbp_api" }
 nn_api = { path = "../nn_api" }
 sb1_api = { path = "../sb1_api" }
