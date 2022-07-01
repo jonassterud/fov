@@ -8,7 +8,7 @@ pub type Number = f64;
 
 // TODO: Use Serde to rename to camelCase and fix special cases
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Clone)]
 pub struct AccountDTO {
     pub key: Option<String>,
     pub account_number: Option<String>,
@@ -32,7 +32,7 @@ pub struct AccountDTO {
     pub e_invoice_customer_reference: Option<String>,
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Clone)]
 pub struct AccountPropertiesDTO {
     pub has_access: Option<bool>,
     pub user_has_right_of_disposal: Option<bool>,
@@ -55,13 +55,13 @@ pub struct AccountPropertiesDTO {
     pub is_default_payment_account: Option<bool>,
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Clone)]
 pub struct AccountsDTO {
     pub accounts: Option<Vec<AccountDTO>>,
     pub links_dto: Option<LinksDTO>,
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Clone)]
 pub struct CustomerDTO {
     pub name: Option<String>,
     pub first_name: Option<String>,
@@ -72,23 +72,23 @@ pub struct CustomerDTO {
     pub organisation_number: Option<String>,
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Clone)]
 pub struct LinksDTO {}
 
 /*
-#[derive(Deserialize)]
+#[derive(Deserialize, Clone)]
 pub struct Number {
 
 }
 */
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Clone)]
 pub struct AccountBalanceDTO {
     pub account_balance: Option<Number>,
     pub name: Option<String>,
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Clone)]
 pub struct ErrorDTO {
     pub code: Option<String>,
     pub message: Option<String>,
@@ -98,41 +98,41 @@ pub struct ErrorDTO {
     pub trace_id: Option<String>,
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Clone)]
 pub struct ErrorsDTO {
     pub errors: Option<Vec<ErrorDTO>>,
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Clone)]
 pub struct LocalizedMessage {
     pub template: Option<String>,
     pub values: Option<Vec<String>>,
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Clone)]
 pub struct AccountBalanceRequestDTO {
     pub account_number: Option<String>,
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Clone)]
 pub struct AccountRoleDTO {
     pub role_type: Option<String>,
     pub valid_from_date: Option<String>,
     pub valid_to_date: Option<String>,
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Clone)]
 pub struct AccountRolesDTO {
     pub roles: Option<Vec<AccountRoleDTO>>,
     pub owner_has_right_of_disposal: Option<bool>,
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Clone)]
 pub struct AccountKeysDTO {
     pub account_keys_map: Option<HashMap<String, String>>,
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Clone)]
 pub struct AccountDetailsDTO {
     pub free_withdrawels_left: Option<i32>,
     pub last_withdrawal_date: Option<String>,
