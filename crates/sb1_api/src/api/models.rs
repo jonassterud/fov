@@ -6,8 +6,6 @@ use std::collections::HashMap;
 
 pub type Number = f64;
 
-// TODO: Use Serde to rename to camelCase and fix special cases
-
 #[derive(Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct AccountDTO {

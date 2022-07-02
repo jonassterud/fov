@@ -7,6 +7,11 @@ use anyhow::{anyhow, Result};
 use reqwest::{header, StatusCode, Url};
 
 impl API {
+    /// Retrieve account keys for account numbers
+    /// 
+    /// # Arguments
+    /// 
+    /// * `account_number` - List of account numbers
     pub async fn accounts_keys(&self, account_number: Vec<String>) -> Result<AccountKeysDTO> {
         let url = Url::parse_with_params(
             "https://api.sparebank1.no/personal/banking/accounts/keys",
@@ -38,6 +43,11 @@ impl API {
         }
     }
 
+    /// Get account
+    /// 
+    /// # Arguments
+    /// 
+    /// * `account_key` - Account key
     pub async fn accounts_account_key(&self, account_key: String) -> Result<AccountDTO> {
         let url = format!(
             "https://api.sparebank1.no/personal/banking/accounts/{}",
@@ -69,6 +79,11 @@ impl API {
         }
     }
 
+    /// Get additional account details
+    /// 
+    /// # Arguments
+    /// 
+    /// * `account_key` - Account key
     pub async fn accounts_account_key_details(
         &self,
         account_key: String,
@@ -103,6 +118,11 @@ impl API {
         }
     }
 
+    /// Get account roles
+    /// 
+    /// # Arguments
+    /// 
+    /// * `account_key` - Account key
     pub async fn accounts_account_key_roles(&self, account_key: String) -> Result<AccountRolesDTO> {
         let url = format!(
             "https://api.sparebank1.no/personal/banking/accounts/{}/roles",
@@ -134,6 +154,11 @@ impl API {
         }
     }
 
+    /// Get account cards
+    /// 
+    /// # Arguments
+    /// 
+    /// * `account_key` - Account key
     pub async fn accounts_account_key_cards(&self, account_key: String) -> Result<AccountRolesDTO> {
         let url = format!(
             "https://api.sparebank1.no/personal/banking/accounts/{}/cards",
@@ -165,6 +190,17 @@ impl API {
         }
     }
 
+    /// List accounts entities
+    /// 
+    /// # Arguments
+    /// 
+    /// * `include_nok_accounts` - Specify whether the response should contain NOK accounts
+    /// * `include_currency_accounts` - Specify whether the response should contain currency accounts
+    /// * `include_bsu_accounts` - Specify whether the response should contain BSU accounts
+    /// * `include_hidden_accounts` - Specify whether the response should contain Hidden accounts
+    /// * `include_credit_card_accounts` - Specify whether the response should contain credit card accounts
+    /// * `include_ask_accounts` - Specify whether the response should contain ASK accounts
+    /// * `include_pension_accounts` - Specify whether the response should contain pension accounts
     pub async fn accounts(
         &self,
         include_nok_accounts: bool,
@@ -222,6 +258,7 @@ impl API {
         }
     }
 
+    /// Get default payment account
     pub async fn accounts_default(&self) -> Result<AccountDTO> {
         let resp = self
             .client
@@ -247,6 +284,7 @@ impl API {
         }
     }
 
+    /// Retrieve account balance
     pub async fn accounts_balance(_body: String) -> Result<AccountBalanceDTO> {
         todo!()
     }

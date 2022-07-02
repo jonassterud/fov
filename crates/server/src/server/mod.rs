@@ -5,12 +5,20 @@ use portfolio::Portfolio;
 use shared::Config;
 use warp::Filter;
 
+/// The server struct
 pub struct Server {
+    /// Portfolio connected to this server
     portfolio: Portfolio,
+    /// Configuration struct
     config: Config,
 }
 
 impl Server {
+     /// Creates a new server
+    /// 
+    /// # Arguments
+    /// 
+    /// * `config` - A `Config` struct to use for this server + portfolio
     pub fn new(config: Config) -> Server {
         Server {
             portfolio: Portfolio::new(&config),
@@ -18,6 +26,7 @@ impl Server {
         }
     }
 
+    /// Start the server
     pub async fn start(mut self) -> Result<()> {
         // Update SpareBank 1 assets
         self.portfolio.update_sb1_assets().await?;
@@ -37,7 +46,6 @@ impl Server {
 
         // Serve paths and start server
         println!("Server running: http://127.0.0.1:3030");
-
         let routes = warp::get().and(cbp_assets.or(nn_assets).or(sb1_assets));
         warp::serve(routes).run(([127, 0, 0, 1], 3030)).await;
 
