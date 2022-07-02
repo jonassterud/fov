@@ -34,7 +34,7 @@ impl API {
 
         match resp.status() {
             StatusCode::OK => Ok(resp.json::<AccountKeysDTO>().await?),
-            //TODO: StatusCode::400 => Err(ErrorsDTO...),
+            StatusCode::BAD_REQUEST => Err(anyhow!("{:?}", resp.json::<ErrorsDTO>().await?)),
             _ => Err(anyhow!(
                 "SpareBank 1 API Error.\nHTTP Code: {}\nResponse: {}",
                 resp.status(),
@@ -70,7 +70,7 @@ impl API {
 
         match resp.status() {
             StatusCode::OK => Ok(resp.json::<AccountDTO>().await?),
-            //TODO: StatusCode::401 => Err(ErrorsDTO...),
+            StatusCode::UNAUTHORIZED => Err(anyhow!("{:?}", resp.json::<ErrorsDTO>().await?)),
             _ => Err(anyhow!(
                 "SpareBank 1 API Error.\nHTTP Code: {}\nResponse: {}",
                 resp.status(),
@@ -109,7 +109,7 @@ impl API {
 
         match resp.status() {
             StatusCode::OK => Ok(resp.json::<AccountDetailsDTO>().await?),
-            //TODO: StatusCode::404 => Err(ErrorsDTO...),
+            StatusCode::NOT_FOUND => Err(anyhow!("{:?}", resp.json::<ErrorsDTO>().await?)),
             _ => Err(anyhow!(
                 "SpareBank 1 API Error.\nHTTP Code: {}\nResponse: {}",
                 resp.status(),
@@ -145,7 +145,7 @@ impl API {
 
         match resp.status() {
             StatusCode::OK => Ok(resp.json::<AccountRolesDTO>().await?),
-            //TODO: StatusCode::404 => Err(ErrorsDTO...),
+            StatusCode::NOT_FOUND => Err(anyhow!("{:?}", resp.json::<ErrorsDTO>().await?)),
             _ => Err(anyhow!(
                 "SpareBank 1 API Error.\nHTTP Code: {}\nResponse: {}",
                 resp.status(),
@@ -181,7 +181,7 @@ impl API {
 
         match resp.status() {
             StatusCode::OK => Ok(resp.json::<AccountRolesDTO>().await?),
-            //TODO: StatusCode::404 => Err(ErrorsDTO...),
+            StatusCode::NOT_FOUND => Err(anyhow!("{:?}", resp.json::<ErrorsDTO>().await?)),
             _ => Err(anyhow!(
                 "SpareBank 1 API Error.\nHTTP Code: {}\nResponse: {}",
                 resp.status(),

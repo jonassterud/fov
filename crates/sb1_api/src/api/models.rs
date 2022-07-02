@@ -6,7 +6,7 @@ use std::collections::HashMap;
 
 pub type Number = f64;
 
-#[derive(Deserialize, Clone)]
+#[derive(Deserialize, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct AccountDTO {
     pub key: Option<String>,
@@ -34,7 +34,7 @@ pub struct AccountDTO {
     pub e_invoice_customer_reference: Option<String>,
 }
 
-#[derive(Deserialize, Clone)]
+#[derive(Deserialize, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct AccountPropertiesDTO {
     pub has_access: Option<bool>,
@@ -58,7 +58,7 @@ pub struct AccountPropertiesDTO {
     pub is_default_payment_account: Option<bool>,
 }
 
-#[derive(Deserialize, Clone)]
+#[derive(Deserialize, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct AccountsDTO {
     pub errors: Vec<String>,
@@ -67,7 +67,7 @@ pub struct AccountsDTO {
     pub links_dto: Option<LinksDTO>,
 }
 
-#[derive(Deserialize, Clone)]
+#[derive(Deserialize, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct CustomerDTO {
     pub name: Option<String>,
@@ -79,17 +79,17 @@ pub struct CustomerDTO {
     pub organisation_number: Option<String>,
 }
 
-#[derive(Deserialize, Clone)]
+#[derive(Deserialize, Clone, Debug)]
 pub struct LinksDTO {}
 
 /*
-#[derive(Deserialize, Clone)]
+#[derive(Deserialize, Clone, Debug)]
 pub struct Number {
 
 }
 */
 
-#[derive(Deserialize, Clone)]
+#[derive(Deserialize, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct ErrorDTO {
     pub code: Option<String>,
@@ -100,26 +100,26 @@ pub struct ErrorDTO {
     pub trace_id: Option<String>,
 }
 
-#[derive(Deserialize, Clone)]
+#[derive(Deserialize, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct ErrorsDTO {
     pub errors: Option<Vec<ErrorDTO>>,
 }
 
-#[derive(Deserialize, Clone)]
+#[derive(Deserialize, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct LocalizedMessage {
     pub template: Option<String>,
     pub values: Option<Vec<String>>,
 }
 
-#[derive(Deserialize, Clone)]
+#[derive(Deserialize, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct AccountKeysDTO {
     pub account_keys_map: Option<HashMap<String, String>>,
 }
 
-#[derive(Deserialize, Clone)]
+#[derive(Deserialize, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct AccountDetailsDTO {
     pub free_withdrawels_left: Option<i32>,
@@ -135,20 +135,20 @@ pub struct AccountDetailsDTO {
     pub bank_identifier_code: Option<String>,
 }
 
-#[derive(Deserialize, Clone)]
+#[derive(Deserialize, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct AccountBalanceDTO {
     pub account_balance: Option<Number>,
     pub name: Option<String>,
 }
 
-#[derive(Deserialize, Clone)]
+#[derive(Deserialize, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct AccountBalanceRequestDTO {
     pub account_number: Option<String>,
 }
 
-#[derive(Deserialize, Clone)]
+#[derive(Deserialize, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct AccountRoleDTO {
     pub role_type: Option<String>,
@@ -156,7 +156,7 @@ pub struct AccountRoleDTO {
     pub valid_to_date: Option<String>,
 }
 
-#[derive(Deserialize, Clone)]
+#[derive(Deserialize, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct AccountRolesDTO {
     pub roles: Option<Vec<AccountRoleDTO>>,
