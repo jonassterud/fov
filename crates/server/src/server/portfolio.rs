@@ -56,7 +56,7 @@ impl Portfolio {
     }
 
     fn add_to_sb1_assets(&mut self, assets: Vec<impl Into<Asset> + Clone>) {
-        self.cbp_assets
+        self.sb1_assets
             .append(&mut assets.iter().map(|x| x.clone().into()).collect());
     }
 }
