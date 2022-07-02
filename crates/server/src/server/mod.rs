@@ -36,7 +36,7 @@ impl Server {
         });
 
         // Serve paths and start server
-        println!("Server running: 127.0.0.1:3030");
+        println!("Server running: http://127.0.0.1:3030");
 
         let routes = warp::get().and(cbp_assets.or(nn_assets).or(sb1_assets));
         warp::serve(routes).run(([127, 0, 0, 1], 3030)).await;

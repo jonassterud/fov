@@ -9,6 +9,7 @@ pub type Number = f64;
 // TODO: Use Serde to rename to camelCase and fix special cases
 
 #[derive(Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct AccountDTO {
     pub key: Option<String>,
     pub account_number: Option<String>,
@@ -18,21 +19,25 @@ pub struct AccountDTO {
     pub balance: Option<Number>,
     pub available_balance: Option<Number>,
     pub credit_card_credit_limit: Option<Number>,
+    #[serde(rename = "creditCardAccountID")]
     pub credit_card_account_id: Option<String>,
     pub currency_code: Option<String>,
     pub owner: Option<CustomerDTO>,
     pub product_type: Option<String>,
+    #[serde(rename = "type")]
     pub _type: Option<String>,
     pub product_id: Option<String>,
     pub description_code: Option<String>,
     pub obs_codes: Option<Vec<String>>,
     pub disposal_role: Option<bool>,
     pub account_properties: Option<AccountPropertiesDTO>,
+    #[serde(rename = "linksDTO")]
     pub links_dto: Option<LinksDTO>,
     pub e_invoice_customer_reference: Option<String>,
 }
 
 #[derive(Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct AccountPropertiesDTO {
     pub has_access: Option<bool>,
     pub user_has_right_of_disposal: Option<bool>,
@@ -56,12 +61,16 @@ pub struct AccountPropertiesDTO {
 }
 
 #[derive(Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct AccountsDTO {
+    pub errors: Vec<String>,
     pub accounts: Option<Vec<AccountDTO>>,
+    #[serde(rename = "linksDTO")]
     pub links_dto: Option<LinksDTO>,
 }
 
 #[derive(Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct CustomerDTO {
     pub name: Option<String>,
     pub first_name: Option<String>,
@@ -83,12 +92,7 @@ pub struct Number {
 */
 
 #[derive(Deserialize, Clone)]
-pub struct AccountBalanceDTO {
-    pub account_balance: Option<Number>,
-    pub name: Option<String>,
-}
-
-#[derive(Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ErrorDTO {
     pub code: Option<String>,
     pub message: Option<String>,
@@ -99,40 +103,26 @@ pub struct ErrorDTO {
 }
 
 #[derive(Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct ErrorsDTO {
     pub errors: Option<Vec<ErrorDTO>>,
 }
 
 #[derive(Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct LocalizedMessage {
     pub template: Option<String>,
     pub values: Option<Vec<String>>,
 }
 
 #[derive(Deserialize, Clone)]
-pub struct AccountBalanceRequestDTO {
-    pub account_number: Option<String>,
-}
-
-#[derive(Deserialize, Clone)]
-pub struct AccountRoleDTO {
-    pub role_type: Option<String>,
-    pub valid_from_date: Option<String>,
-    pub valid_to_date: Option<String>,
-}
-
-#[derive(Deserialize, Clone)]
-pub struct AccountRolesDTO {
-    pub roles: Option<Vec<AccountRoleDTO>>,
-    pub owner_has_right_of_disposal: Option<bool>,
-}
-
-#[derive(Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct AccountKeysDTO {
     pub account_keys_map: Option<HashMap<String, String>>,
 }
 
 #[derive(Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct AccountDetailsDTO {
     pub free_withdrawels_left: Option<i32>,
     pub last_withdrawal_date: Option<String>,
@@ -145,4 +135,32 @@ pub struct AccountDetailsDTO {
     pub net_calculated_credit_line_interest: Option<Number>,
     pub total_credit_interest_last_year: Option<Number>,
     pub bank_identifier_code: Option<String>,
+}
+
+#[derive(Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct AccountBalanceDTO {
+    pub account_balance: Option<Number>,
+    pub name: Option<String>,
+}
+
+#[derive(Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct AccountBalanceRequestDTO {
+    pub account_number: Option<String>,
+}
+
+#[derive(Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct AccountRoleDTO {
+    pub role_type: Option<String>,
+    pub valid_from_date: Option<String>,
+    pub valid_to_date: Option<String>,
+}
+
+#[derive(Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct AccountRolesDTO {
+    pub roles: Option<Vec<AccountRoleDTO>>,
+    pub owner_has_right_of_disposal: Option<bool>,
 }
