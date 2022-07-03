@@ -1,19 +1,15 @@
-[workspace]
-members = ["crates/*"]
-
 [package]
-name = "fov"
+name = "sb1_api"
 version = "0.1.0"
 authors = ["Jonas Mathisrud Sterud <jonas.sterud@gmail.com>"]
-description = "Get an overview of your finances."
+description = "Get an overview of your finances - SpareBank 1 API crate."
 repository = "https://github.com/jonassterud/fov"
 license = "MIT"
 edition = "2021"
 
 [dependencies]
-shared = { path = "crates/shared" }
-server = { path = "crates/server" }
+shared = { path = "../shared" }
 tokio = { version = "1.19.2", features = ["full"] }
+reqwest = { version = "0.11.11", features = ["json"] }
 serde = { version = "1.0.137", features = ["derive"] }
 anyhow = "1.0.57"
-toml = "0.5.9"
