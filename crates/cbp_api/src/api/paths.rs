@@ -40,7 +40,7 @@ impl API {
         match resp.status() {
             StatusCode::OK => Ok(resp.json::<Vec<Account>>().await?),
             _ => Err(anyhow!(
-                "SpareBank 1 API Error.\nHTTP Code: {}\nResponse: {}",
+                "Coinbase Pro API Error.\nHTTP Code: {}\nResponse: {}",
                 resp.status(),
                 resp.text().await?
             )),
@@ -66,7 +66,7 @@ impl API {
         match resp.status() {
             StatusCode::OK => Ok(resp.json::<ProductTicker>().await?),
             _ => Err(anyhow!(
-                "SpareBank 1 API Error.\nHTTP Code: {}\nResponse: {}",
+                "Coinbase Pro API Error.\nHTTP Code: {}\nResponse: {}",
                 resp.status(),
                 resp.text().await?
             )),

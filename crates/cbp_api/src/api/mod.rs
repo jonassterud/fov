@@ -7,7 +7,7 @@ mod models;
 mod models_impls;
 mod paths;
 
-/// API struct to connect to SpareBank 1 API
+/// API struct to connect to Coinbase Pro API
 pub struct API {
     client: reqwest::Client,
     key: String,
