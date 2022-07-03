@@ -1,2 +1,5 @@
 /target
 **/*.rs.bk
+*/secret.toml
+**/secret.toml
+src/secret.toml

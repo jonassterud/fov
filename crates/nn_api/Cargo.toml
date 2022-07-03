@@ -1,10 +1,12 @@
 [package]
-name = "coinbase-pro-api"
+name = "nn_api"
 version = "0.1.0"
 authors = ["Jonas Mathisrud Sterud <jonas.sterud@gmail.com>"]
-description = "Library to interact with the Coinbase Pro API"
+description = "Get an overview of your finances - Nordnet API crate."
 repository = "https://github.com/jonassterud/fov"
 license = "MIT"
 edition = "2021"
 
 [dependencies]
+shared = { path = "../shared" }
+anyhow = "1.0.57"
