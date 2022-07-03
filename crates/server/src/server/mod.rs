@@ -31,6 +31,9 @@ impl Server {
         // Update SpareBank 1 assets
         self.portfolio.update_sb1_assets().await?;
 
+        // Update Coinbase Pro assets
+        self.portfolio.update_cbp_assets().await?;
+
         // Create paths
         let cbp_assets = warp::path!("cbp" / "assets").map(move || {
             serde_json::to_string(&self.portfolio.cbp_assets).expect("Failed serializing Asset")
