@@ -42,6 +42,8 @@ impl Portfolio {
     pub async fn update_cbp_assets(&mut self) -> Result<()> {
         if let Some(api) = &self.cbp_api {
             let accounts = api.accounts().await?;
+
+            // Remove accounts with a balance of 0.0
             let accounts = accounts
                 .into_iter()
                 .filter(|x| {
