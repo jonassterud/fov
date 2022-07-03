@@ -1,4 +1,4 @@
-use anyhow::Result;
+use anyhow::{anyhow, Result};
 use shared::{Asset, Config};
 
 /// Portfolio to hold information on the different assets
@@ -28,15 +28,28 @@ impl Portfolio {
             cbp_assets: vec![],
             nn_assets: vec![],
             sb1_assets: vec![],
-            cbp_api: None, // for now
-            nn_api: None,  // for now
+            nn_api: None, // for now
+            cbp_api: Some(cbp_api::API::new(
+                config.cbp_key.clone(),
+                config.cbp_secret.clone(),
+                config.cbp_passphrase.clone(),
+            )),
             sb1_api: Some(sb1_api::API::new(config.sb1_access_token.clone())),
         }
     }
 
     /// Update Coinbase Pro assets
-    pub async fn update_cbp_assets(&mut self) {
-        todo!();
+    pub async fn update_cbp_assets(&mut self) -> Result<()> {
+        if let Some(api) = &self.cbp_api {
+            let accounts = api.accounts().await?;
+            self.add_to_cbp_assets(accounts);
+
+            Ok(())
+        } else {
+            Err(anyhow!(
+                "Failed updating cbp_assets because no cbp_api could be found."
+            ))
+        }
     }
 
     /// Update Nordnet assets
@@ -54,9 +67,14 @@ impl Portfolio {
             if let Some(assets) = asset_accounts.accounts {
                 self.add_to_sb1_assets(assets);
             }
+
+            Ok(())
+        } else {
+            Err(anyhow!(
+                "Failed updating sb1_assets because no sb1_api could be found."
+            ))
         }
 
-        Ok(())
     }
 
     /// Transform and add Coinbase Pro assets to portfolio
