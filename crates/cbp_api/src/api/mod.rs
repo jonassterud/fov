@@ -4,6 +4,7 @@ use sha2::Sha256;
 use std::time::{SystemTime, UNIX_EPOCH};
 
 mod models;
+mod models_impls;
 mod paths;
 
 /// API struct to connect to SpareBank 1 API
