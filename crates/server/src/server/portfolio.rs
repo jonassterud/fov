@@ -42,6 +42,18 @@ impl Portfolio {
     pub async fn update_cbp_assets(&mut self) -> Result<()> {
         if let Some(api) = &self.cbp_api {
             let accounts = api.accounts().await?;
+            let accounts = accounts
+                .into_iter()
+                .filter(|x| {
+                    x.balance
+                        .clone()
+                        .unwrap_or("0.0".to_string())
+                        .parse::<f64>()
+                        .unwrap()
+                        > 0.0
+                })
+                .collect();
+
             self.add_to_cbp_assets(accounts);
 
             Ok(())
@@ -74,7 +86,6 @@ impl Portfolio {
                 "Failed updating sb1_assets because no sb1_api could be found."
             ))
         }
-
     }
 
     /// Transform and add Coinbase Pro assets to portfolio
