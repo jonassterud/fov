@@ -1,5 +1,4 @@
-use anyhow::{anyhow, Result};
-use serde::Serialize;
+use anyhow::Result;
 use shared::{Asset, Config};
 
 /// Portfolio to hold information on the different assets
@@ -20,9 +19,9 @@ pub struct Portfolio {
 
 impl Portfolio {
     /// Creates a new portfolio
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `config` - Reference to a `Config`, used to connect to the different APIs
     pub fn new(config: &Config) -> Portfolio {
         Portfolio {
@@ -61,9 +60,9 @@ impl Portfolio {
     }
 
     /// Transform and add Coinbase Pro assets to portfolio
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `assets` - A vector containing elements that implement the `Into<Asset>` trait
     fn add_to_cbp_assets(&mut self, assets: Vec<impl Into<Asset> + Clone>) {
         self.cbp_assets
@@ -71,9 +70,9 @@ impl Portfolio {
     }
 
     /// Transform and add Nordnet assets to portfolio
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `assets` - A vector containing elements that implement the `Into<Asset>` trait
     fn add_to_nn_assets(&mut self, assets: Vec<impl Into<Asset> + Clone>) {
         self.nn_assets
@@ -81,9 +80,9 @@ impl Portfolio {
     }
 
     /// Transform and add SpareBank 1 assets to portfolio
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `assets` - A vector containing elements that implement the `Into<Asset>` trait
     fn add_to_sb1_assets(&mut self, assets: Vec<impl Into<Asset> + Clone>) {
         self.sb1_assets

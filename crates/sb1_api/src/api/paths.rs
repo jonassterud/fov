@@ -8,9 +8,9 @@ use reqwest::{header, StatusCode, Url};
 
 impl API {
     /// Retrieve account keys for account numbers
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `account_number` - List of account numbers
     pub async fn accounts_keys(&self, account_number: Vec<String>) -> Result<AccountKeysDTO> {
         let url = Url::parse_with_params(
@@ -44,9 +44,9 @@ impl API {
     }
 
     /// Get account
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `account_key` - Account key
     pub async fn accounts_account_key(&self, account_key: String) -> Result<AccountDTO> {
         let url = format!(
@@ -80,9 +80,9 @@ impl API {
     }
 
     /// Get additional account details
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `account_key` - Account key
     pub async fn accounts_account_key_details(
         &self,
@@ -119,9 +119,9 @@ impl API {
     }
 
     /// Get account roles
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `account_key` - Account key
     pub async fn accounts_account_key_roles(&self, account_key: String) -> Result<AccountRolesDTO> {
         let url = format!(
@@ -155,9 +155,9 @@ impl API {
     }
 
     /// Get account cards
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `account_key` - Account key
     pub async fn accounts_account_key_cards(&self, account_key: String) -> Result<AccountRolesDTO> {
         let url = format!(
@@ -191,9 +191,9 @@ impl API {
     }
 
     /// List accounts entities
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `include_nok_accounts` - Specify whether the response should contain NOK accounts
     /// * `include_currency_accounts` - Specify whether the response should contain currency accounts
     /// * `include_bsu_accounts` - Specify whether the response should contain BSU accounts

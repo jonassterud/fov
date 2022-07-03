@@ -11,9 +11,9 @@ pub struct Config {
 
 impl Config {
     /// Returns a Config based on a TOML configuration file
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `path` - The path to the config file
     pub fn from_file(path: &str) -> Result<Config> {
         let content = std::fs::read_to_string(path)?;

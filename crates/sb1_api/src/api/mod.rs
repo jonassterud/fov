@@ -10,9 +10,9 @@ pub struct API {
 
 impl API {
     /// Creates a new `API` struct
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `access_token` - OAuth access token
     pub fn new(access_token: String) -> API {
         API {

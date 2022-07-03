@@ -14,10 +14,10 @@ pub struct Server {
 }
 
 impl Server {
-     /// Creates a new server
-    /// 
+    /// Creates a new server
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `config` - A `Config` struct to use for this server + portfolio
     pub fn new(config: Config) -> Server {
         Server {
