@@ -45,12 +45,21 @@ function add_assets_to_table(data, title) {
 
     // Add assets
     data.forEach(asset => {
+        // Add name and description together
+        let name = asset.name + (asset.description ? ` - ${asset.description}` : "");
+        // Only show ticker if currency/ticker is not NOK
+        let ticker = asset.currency === "NOK" ? "" : asset.currency;
+        // Only show balance if currency/ticker is not NOK
+        let balance = asset.currency === "NOK" ? "" : asset.balance;
+        // Calculate value of asset in NOK
+        let value = "0 NOK"; // get_value(...)
+
         let table_row = `
         <tr>
-            <td headers="name">${asset.name}</td>
-            <td headers="ticker">${asset.currency}</td>
-            <td headers="balance">${asset.balance}</td>
-            <td headers="value">${"unknown"}</td>
+            <td headers="name">${name}</td>
+            <td headers="ticker">${ticker}</td>
+            <td headers="balance">${balance}</td>
+            <td headers="value">${value}</td>
         </tr>`;
 
         table_body.innerHTML += table_row;
