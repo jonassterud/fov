@@ -9,11 +9,22 @@
     <title>FOV</title>
 </head>
 <body>
-    <h5 class="asset_title">SpareBank 1</h5>
-    <div id="sb1_assets"></div>
-    <h5 class="asset_title">Coinbase Pro</h5>
-    <div id="cbp_assets"></div>
-    <h5 class="asset_title">Nordnet</h5>
-    <div id="nn_assets"></div>
+    <table>
+        <thead>
+            <th></th>
+            <th scope="col" id="name">Name</th>
+            <th scope="col" id="ticker">Ticker</th>
+            <th scope="col" id="balance">Balance</th>
+            <th scope="col" id="value">Value</th>
+        </thead>
+        <tbody id="asset_table">
+            
+        </tbody>
+        <tfoot>
+            <tr>
+                <th scope="row">Totals</th>
+            </tr>
+        </tfoot>
+    </table>
 </body>
 </html>

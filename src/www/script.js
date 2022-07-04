@@ -1,6 +1,17 @@
+window.onload = () => {
+    load_all_assets();
+}
+
+function load_all_assets() {
+    load_sb1_assets();
+    load_cbp_assets();
+    load_nn_assets();
+    // ...
+}
+
 function load_sb1_assets() {
     load_assets("sb1/assets").then(data => {
-        add_assets(data, "sb1_assets")
+        add_assets_to_table(data, "SpareBank 1")
     }).catch(error => {
         console.error(error);
     });
@@ -8,7 +19,7 @@ function load_sb1_assets() {
 
 function load_cbp_assets() {
     load_assets("cbp/assets").then(data => {
-        add_assets(data, "cbp_assets")
+        add_assets_to_table(data, "Coinbase Pro")
     }).catch(error => {
         console.error(error);
     });
@@ -16,29 +27,33 @@ function load_cbp_assets() {
 
 function load_nn_assets() {
     load_assets("nn/assets").then(data => {
-        add_assets(data, "nn_assets")
+        add_assets_to_table(data, "Nordnet")
     }).catch(error => {
         console.error(error);
     });
 }
 
-function add_assets(data, container_id) {
-    let container = document.getElementById(container_id);
-
-    if (container === null) {
-        throw new Error(`Failed getting container with id: ${container_id}`)
+function add_assets_to_table(data, title) {
+    let table_body = document.getElementById("asset_table");
+    if (table_body === null) {
+        throw new Error("Failed getting tbody with id: asset_table");
     }
 
-    data.forEach(asset => {
-        let text_node = `
-        <span class="asset">
-            <span class="asset_name">${asset.name}</span>
-            <span class="asset_description">${asset.description ? asset.description : ""}</span>
-            <span class="asset_balance">${asset.balance} ${asset.currency}</span>
-        </span>
-        <br>`;
+    // Add header for this asset group
+    let table_header = `<tr><th scope="row" rowspan="${data.length + 1}">${title}</th></tr>`;
+    table_body.innerHTML += table_header;
 
-        container.innerHTML += text_node;
+    // Add assets
+    data.forEach(asset => {
+        let table_row = `
+        <tr>
+            <td headers="name">${asset.name}</td>
+            <td headers="ticker">${asset.currency}</td>
+            <td headers="balance">${asset.balance}</td>
+            <td headers="value">${"unknown"}</td>
+        </tr>`;
+
+        table_body.innerHTML += table_row;
     });
 }
 
