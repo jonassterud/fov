@@ -61,11 +61,11 @@ pub struct Account {
 
 #[derive(Debug, Deserialize)]
 pub struct ProductTicker {
-    pub ask: String,
-    pub bid: String,
-    pub volume: String,
-    pub trade_id: i32,
-    pub price: String,
-    pub size: String,
-    pub time: String,
+    pub ask: Option<String>,
+    pub bid: Option<String>,
+    pub volume: Option<String>,
+    pub trade_id: Option<i32>,
+    pub price: Option<String>,
+    pub size: Option<String>,
+    pub time: Option<String>,
 }

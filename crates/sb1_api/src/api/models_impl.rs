@@ -7,6 +7,7 @@ impl Into<shared::Asset> for AccountDTO {
             description: self.description,
             balance: self.balance.expect("AccountDTO missing balance"),
             currency: self.currency_code.expect("AccountDTO missing currency"),
+            value: 0.0,
         }
     }
 }

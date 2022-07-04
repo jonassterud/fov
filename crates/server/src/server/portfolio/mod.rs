@@ -1,3 +1,7 @@
+mod cbp_assets;
+mod sb1_assets;
+mod nn_assets;
+
 use anyhow::{anyhow, Result};
 use shared::{Asset, Config};
 
@@ -38,35 +42,6 @@ impl Portfolio {
         }
     }
 
-    /// Update Coinbase Pro assets
-    pub async fn update_cbp_assets(&mut self) -> Result<()> {
-        if let Some(api) = &self.cbp_api {
-            let raw_accounts = api.accounts().await?;
-            let mut accounts = vec![];
-
-            for mut account in raw_accounts {
-                // Filter out assets with a balance of 0.0
-                let balance: f64 = account.balance.clone().unwrap_or("0.0".to_string()).parse()?;
-                if balance > 0.0 {
-                    // Get name of asset
-                    let currency = api.currencies_currency_id(&account.currency.clone().expect("Account missing name")).await?;
-                    account.id = currency.name;
-
-                    // Add asset to accounts
-                    accounts.push(account);
-                }
-            }
-
-            self.add_to_cbp_assets(accounts);
-
-            Ok(())
-        } else {
-            Err(anyhow!(
-                "Failed updating cbp_assets because no cbp_api could be found."
-            ))
-        }
-    }
-
     /// Update Nordnet assets
     pub async fn update_nn_assets(&mut self) {
         todo!();
@@ -89,16 +64,6 @@ impl Portfolio {
                 "Failed updating sb1_assets because no sb1_api could be found."
             ))
         }
-    }
-
-    /// Transform and add Coinbase Pro assets to portfolio
-    ///
-    /// # Arguments
-    ///
-    /// * `assets` - A vector containing elements that implement the `Into<Asset>` trait
-    fn add_to_cbp_assets(&mut self, assets: Vec<impl Into<Asset> + Clone>) {
-        self.cbp_assets
-            .append(&mut assets.iter().map(|x| x.clone().into()).collect());
     }
 
     /// Transform and add Nordnet assets to portfolio

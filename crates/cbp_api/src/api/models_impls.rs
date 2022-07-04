@@ -11,6 +11,7 @@ impl Into<shared::Asset> for Account {
                 .parse()
                 .expect("Account balance is not f64"),
             currency: self.currency.expect("Account missing currency"),
+            value: 0.0,
         }
     }
 }

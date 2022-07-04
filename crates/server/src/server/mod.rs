@@ -48,13 +48,26 @@ impl Server {
         });
 
         // Create website paths
-        let html = warp::path!().and(warp::fs::file("/home/jonassterud/Documents/fov/src/www/index.html"));
-        let css = warp::path!("style.css").and(warp::fs::file("/home/jonassterud/Documents/fov/src/www/style.css"));
-        let js = warp::path!("script.js").and(warp::fs::file("/home/jonassterud/Documents/fov/src/www/script.js"));
+        let html = warp::path!().and(warp::fs::file(
+            "/home/jonassterud/Documents/fov/src/www/index.html",
+        ));
+        let css = warp::path!("style.css").and(warp::fs::file(
+            "/home/jonassterud/Documents/fov/src/www/style.css",
+        ));
+        let js = warp::path!("script.js").and(warp::fs::file(
+            "/home/jonassterud/Documents/fov/src/www/script.js",
+        ));
 
         // Serve paths and start server
         println!("Server running: http://127.0.0.1:3030");
-        let routes = warp::get().and(cbp_assets.or(nn_assets).or(sb1_assets).or(html).or(css).or(js));
+        let routes = warp::get().and(
+            cbp_assets
+                .or(nn_assets)
+                .or(sb1_assets)
+                .or(html)
+                .or(css)
+                .or(js),
+        );
         warp::serve(routes).run(([127, 0, 0, 1], 3030)).await;
 
         Ok(())

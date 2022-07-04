@@ -11,4 +11,6 @@ pub struct Asset {
     pub balance: f64,
     /// Currency of the asset
     pub currency: String,
+    /// Value of asset in NOK
+    pub value: f64,
 }
