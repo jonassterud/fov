@@ -9,9 +9,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
         Server::new(config).start().await.expect("Server failed");
     });
 
-    // Start web app
-    // ...
-
     server_handle.await?;
 
     Ok(())
