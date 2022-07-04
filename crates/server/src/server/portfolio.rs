@@ -41,20 +41,21 @@ impl Portfolio {
     /// Update Coinbase Pro assets
     pub async fn update_cbp_assets(&mut self) -> Result<()> {
         if let Some(api) = &self.cbp_api {
-            let accounts = api.accounts().await?;
+            let raw_accounts = api.accounts().await?;
+            let mut accounts = vec![];
 
-            // Remove accounts with a balance of 0.0
-            let accounts = accounts
-                .into_iter()
-                .filter(|x| {
-                    x.balance
-                        .clone()
-                        .unwrap_or("0.0".to_string())
-                        .parse::<f64>()
-                        .unwrap()
-                        > 0.0
-                })
-                .collect();
+            for mut account in raw_accounts {
+                // Filter out assets with a balance of 0.0
+                let balance: f64 = account.balance.clone().unwrap_or("0.0".to_string()).parse()?;
+                if balance > 0.0 {
+                    // Get name of asset
+                    let currency = api.currencies_currency_id(&account.currency.clone().expect("Account missing name")).await?;
+                    account.id = currency.name;
+
+                    // Add asset to accounts
+                    accounts.push(account);
+                }
+            }
 
             self.add_to_cbp_assets(accounts);
 
