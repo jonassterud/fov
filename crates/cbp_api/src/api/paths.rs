@@ -10,6 +10,32 @@ use reqwest::{
 };
 
 impl API {
+    /// Get a currency
+    pub async fn currencies_currency_id(&self, currency_id: &str) -> Result<Currency> {
+        let resp = self
+            .client
+            .get(format!(
+                "https://api.exchange.coinbase.com/currencies/{}",
+                currency_id
+            ))
+            .header(
+                header::USER_AGENT,
+                "Mozilla/5.0 (X11; Linux x86_64; rv:101.0) Gecko/20100101 Firefox/101.0",
+            )
+            .header(header::ACCEPT, "application/json")
+            .send()
+            .await?;
+
+        match resp.status() {
+            StatusCode::OK => Ok(resp.json::<Currency>().await?),
+            _ => Err(anyhow!(
+                "Coinbase Pro API Error.\nHTTP Code: {}\nResponse: {}",
+                resp.status(),
+                resp.text().await?
+            )),
+        }
+    }
+
     /// Get all accounts for a profile
     pub async fn accounts(&self) -> Result<Vec<Account>> {
         let timestamp = self.access_timestamp()?;
