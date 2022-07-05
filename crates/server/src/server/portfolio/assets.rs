@@ -14,17 +14,36 @@ impl Portfolio {
             }
 
             // Calculate asset value
-            let currency = api
-                .currencies_currency_id(&account.currency.clone().unwrap())
-                .await?;
-            let value = match currency.details.unwrap()._type.unwrap().as_ref() {
+            let currency_id = account
+                .currency
+                .as_ref()
+                .ok_or(anyhow!("Account missing currency"))?;
+            let currency = api.currencies_currency_id(&currency_id).await?;
+            let currency_details = currency
+                .details
+                .ok_or(anyhow!("Currency missing details"))?;
+            let currency_type = currency_details
+                ._type
+                .ok_or(anyhow!("Details missing type"))?;
+
+            let value = match currency_type.as_ref() {
                 "crypto" => {
-                    let product_id = format!("{}-USD", &currency.id.unwrap());
+                    let product_id = format!(
+                        "{}-USD",
+                        &currency.id.ok_or(anyhow!("Currency missing id"))?
+                    );
                     let ticker = api.products_product_id_ticker(&product_id).await?;
                     // TODO: Get actual USDNOK value instead of using "10.0"
-                    let asset_price: f64 = ticker.price.unwrap().parse::<f64>()?
-                        * account.balance.clone().unwrap().parse::<f64>()?
-                        * 10.0;
+                    let ticker_price: f64 = ticker
+                        .price
+                        .ok_or(anyhow!("Ticker missing price"))?
+                        .parse::<f64>()?;
+                    let account_balance = account
+                        .balance
+                        .as_ref()
+                        .ok_or(anyhow!("Account missing balance"))?
+                        .parse::<f64>()?;
+                    let asset_price = ticker_price * account_balance * 10.0;
 
                     Ok(asset_price)
                 }
@@ -37,10 +56,15 @@ impl Portfolio {
 
             // Create and add asset
             let asset = Asset {
-                name: currency.name.unwrap(),
+                name: currency.name.ok_or(anyhow!("Currency missing name"))?,
                 description: None,
-                balance: account.balance.unwrap().parse()?,
-                currency: account.currency.unwrap(),
+                balance: account
+                    .balance
+                    .ok_or(anyhow!("Account missing balance"))?
+                    .parse()?,
+                currency: account
+                    .currency
+                    .ok_or(anyhow!("Account missing currency"))?,
                 value: value,
             };
 
@@ -51,7 +75,7 @@ impl Portfolio {
     }
 
     /// Add Nordnet assets to the portfolio
-    pub async fn update_nn_assets(&mut self) {
+    pub async fn _add_nn_asset(&mut self) {
         todo!();
     }
 
@@ -63,14 +87,16 @@ impl Portfolio {
             .accounts(true, true, true, true, true, true, true)
             .await?
             .accounts
-            .unwrap()
+            .ok_or(anyhow!("AccountsDTO missing accounts"))?
         {
             let asset = Asset {
-                name: account.name.unwrap(),
+                name: account.name.ok_or(anyhow!("Account missing name"))?,
                 description: account.description,
                 balance: 0.0,
-                currency: account.currency_code.unwrap(),
-                value: account.balance.unwrap(),
+                currency: account
+                    .currency_code
+                    .ok_or(anyhow!("Account missing currency_code"))?,
+                value: account.balance.ok_or(anyhow!("Account missing balance"))?,
             };
 
             self.sb1_assets.push(asset);
