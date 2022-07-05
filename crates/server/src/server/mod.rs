@@ -29,12 +29,12 @@ impl Server {
     /// Start the server
     pub async fn start(mut self) -> Result<()> {
         // Update SpareBank 1 assets
-        self.portfolio.update_sb1_assets().await?;
+        self.portfolio.add_sb1_assets().await?;
 
         // Update Coinbase Pro assets
-        self.portfolio.update_cbp_assets().await?;
+        self.portfolio.add_cbp_assets().await?;
 
-        // Create paths
+        // Create API paths
         let cbp_assets = warp::path!("cbp" / "assets").map(move || {
             serde_json::to_string(&self.portfolio.cbp_assets).expect("Failed serializing Asset")
         });
@@ -47,9 +47,27 @@ impl Server {
             serde_json::to_string(&self.portfolio.sb1_assets).expect("Failed serializing Asset")
         });
 
+        // Create website paths
+        let html = warp::path!().and(warp::fs::file(
+            "/home/jonassterud/Documents/fov/src/www/index.html",
+        ));
+        let css = warp::path!("style.css").and(warp::fs::file(
+            "/home/jonassterud/Documents/fov/src/www/style.css",
+        ));
+        let js = warp::path!("script.js").and(warp::fs::file(
+            "/home/jonassterud/Documents/fov/src/www/script.js",
+        ));
+
         // Serve paths and start server
         println!("Server running: http://127.0.0.1:3030");
-        let routes = warp::get().and(cbp_assets.or(nn_assets).or(sb1_assets));
+        let routes = warp::get().and(
+            cbp_assets
+                .or(nn_assets)
+                .or(sb1_assets)
+                .or(html)
+                .or(css)
+                .or(js),
+        );
         warp::serve(routes).run(([127, 0, 0, 1], 3030)).await;
 
         Ok(())

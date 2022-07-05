@@ -1,0 +1,26 @@
+:root {
+    --text-color: rgb(255, 255, 230);
+    --background-color: rgb(44, 44, 44);
+    --table-border-color: rgb(153, 153, 153);
+}
+
+html, body {
+    margin: 5px;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--background-color);
+}
+
+h1, h2, h3, h4, h5, h6, p, span, td, th {
+    color:var(--text-color);
+}
+
+table {
+    border: 1px solid var(--table-border-color);
+    border-collapse: collapse;
+}
+
+td, th {
+    border: 1px solid var(--table-border-color);
+    padding: 10px;
+}

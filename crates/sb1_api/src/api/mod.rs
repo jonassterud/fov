@@ -1,5 +1,4 @@
 mod models;
-mod models_impl;
 mod paths;
 
 /// API struct to connect to SpareBank 1 API
