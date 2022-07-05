@@ -29,10 +29,10 @@ impl Server {
     /// Start the server
     pub async fn start(mut self) -> Result<()> {
         // Update SpareBank 1 assets
-        self.portfolio.update_sb1_assets().await?;
+        self.portfolio.add_sb1_assets().await?;
 
         // Update Coinbase Pro assets
-        self.portfolio.update_cbp_assets().await?;
+        self.portfolio.add_cbp_assets().await?;
 
         // Create API paths
         let cbp_assets = warp::path!("cbp" / "assets").map(move || {

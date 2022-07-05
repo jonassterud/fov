@@ -52,7 +52,7 @@ function add_assets_to_table(data, title) {
         // Only show balance if currency/ticker is not NOK
         let balance = asset.currency === "NOK" ? "" : asset.balance;
         // Calculate value of asset in NOK
-        let value = "0 NOK"; // get_value(...)
+        let value = Math.round(asset.value) + " NOK";
 
         let table_row = `
         <tr>

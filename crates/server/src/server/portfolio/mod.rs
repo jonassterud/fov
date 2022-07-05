@@ -1,6 +1,4 @@
-mod cbp_assets;
-mod sb1_assets;
-mod nn_assets;
+mod assets;
 
 use anyhow::{anyhow, Result};
 use shared::{Asset, Config};
@@ -40,49 +38,5 @@ impl Portfolio {
             )),
             sb1_api: Some(sb1_api::API::new(config.sb1_access_token.clone())),
         }
-    }
-
-    /// Update Nordnet assets
-    pub async fn update_nn_assets(&mut self) {
-        todo!();
-    }
-
-    /// Update SpareBank 1 assets
-    pub async fn update_sb1_assets(&mut self) -> Result<()> {
-        if let Some(api) = &self.sb1_api {
-            let asset_accounts = api
-                .accounts(true, true, true, true, true, true, true)
-                .await?;
-
-            if let Some(assets) = asset_accounts.accounts {
-                self.add_to_sb1_assets(assets);
-            }
-
-            Ok(())
-        } else {
-            Err(anyhow!(
-                "Failed updating sb1_assets because no sb1_api could be found."
-            ))
-        }
-    }
-
-    /// Transform and add Nordnet assets to portfolio
-    ///
-    /// # Arguments
-    ///
-    /// * `assets` - A vector containing elements that implement the `Into<Asset>` trait
-    fn add_to_nn_assets(&mut self, assets: Vec<impl Into<Asset> + Clone>) {
-        self.nn_assets
-            .append(&mut assets.iter().map(|x| x.clone().into()).collect());
-    }
-
-    /// Transform and add SpareBank 1 assets to portfolio
-    ///
-    /// # Arguments
-    ///
-    /// * `assets` - A vector containing elements that implement the `Into<Asset>` trait
-    fn add_to_sb1_assets(&mut self, assets: Vec<impl Into<Asset> + Clone>) {
-        self.sb1_assets
-            .append(&mut assets.iter().map(|x| x.clone().into()).collect());
     }
 }
