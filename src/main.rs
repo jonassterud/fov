@@ -9,12 +9,20 @@ async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
 
     // Open config and start server
     let server_handle = tokio::spawn(async {
-        let config = Config::from_file("/home/jonassterud/Documents/fov/src/secret.toml")
-            .expect("Failed opening config");
+        let path = "/home/jonassterud/Documents/fov/src/secret.toml";
+        let mut config: Config;
+        if std::path::Path::new(path).exists() {
+            config = Config::from_file(path)
+                .expect("Failed opening config");
+        } else {
+            config = Config::from_cli().expect("Failed creating config");
+            std::fs::write(path, toml::to_string_pretty(&config).unwrap()).expect("Failed writing config");
+        }
+
         Server::new(config).start().await.expect("Server failed");
     });
 
     server_handle.await?;
-
+    
     Ok(())
 }

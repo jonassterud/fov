@@ -32,11 +32,11 @@ impl Portfolio {
             sb1_assets: vec![],
             nn_api: None, // for now
             cbp_api: Some(cbp_api::API::new(
-                config.cbp_key.clone(),
-                config.cbp_secret.clone(),
-                config.cbp_passphrase.clone(),
+                config.cbp_key.clone().unwrap(),
+                config.cbp_secret.clone().unwrap(),
+                config.cbp_passphrase.clone().unwrap(),
             )),
-            sb1_api: Some(sb1_api::API::new(config.sb1_access_token.clone())),
+            sb1_api: Some(sb1_api::API::new(config.sb1_access_token.clone().unwrap())),
         }
     }
 }
