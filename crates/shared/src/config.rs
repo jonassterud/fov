@@ -1,6 +1,8 @@
 use anyhow::Result;
-use serde::{Deserialize, Serialize};
 use dialoguer::{Confirm, Password};
+use pwbox::{sodium::Sodium, ErasedPwBox, Eraser, Suite};
+use rand::thread_rng;
+use serde::{Deserialize, Serialize};
 
 /// Config file for the application
 #[derive(Deserialize, Serialize)]
@@ -21,13 +23,18 @@ impl Config {
     /// # Arguments
     ///
     /// * `path` - The path to the config file
-    pub fn from_file(path: &str) -> Result<Config> {
+    pub fn from_file(path: &str, password: &str) -> Result<Config> {
         let content = std::fs::read_to_string(path)?;
-        let out = toml::from_str::<Config>(&content)?;
+        let pwbox = toml::from_str(&content)?;
+        let pwbox = Eraser::new().add_suite::<Sodium>().restore(&pwbox)?;
 
-        Ok(out)
+        let decrypted = pwbox.open(password)?;
+        let config = toml::from_slice::<Config>(&decrypted)?;
+
+        Ok(config)
     }
 
+    /// Prompts the user for information and returns a Config
     pub fn from_cli() -> Result<Config> {
         let sb1_active = Confirm::new().with_prompt("Enable SpareBank 1 API?").default(true).interact()?;
         let cbp_active = Confirm::new().with_prompt("Enable Coinbase Pro API?").default(true).interact()?;
@@ -58,5 +65,19 @@ impl Config {
             cbp_secret,
             cbp_passphrase,
         })
+    }
+
+    /// Encrypts and save Config to a file
+    pub fn save_to_file(&self, path: &str, password: &str) -> Result<()> {
+        // Encrypt config
+        let pwbox = Sodium::build_box(&mut thread_rng()).seal(password, toml::to_string(self)?)?;
+        let mut eraser = Eraser::new();
+        eraser.add_suite::<Sodium>();
+        let erased: ErasedPwBox = eraser.erase(&pwbox)?;
+
+        let content = toml::to_string_pretty(&erased)?;
+        std::fs::write(path, content)?;
+
+        Ok(())
     }
 }
