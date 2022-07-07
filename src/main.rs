@@ -1,19 +1,17 @@
+use std::path::PathBuf;
+
 use dialoguer::Password;
 use server::Server;
 use shared::Config;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
-    // TODO
-    // Open a CLI setup, where you paste in API keys,
-    // they get encrypted with a password, etc, etc.
-
     // Open config and start server
     let server_handle = tokio::spawn(async {
-        let path = "/home/jonassterud/Documents/fov/src/secret.toml";
+        let path = PathBuf::from("/home/jonassterud/Documents/fov/src/secret.toml");
         let config: Config;
 
-        if std::path::Path::new(path).exists() {
+        if path.exists() {
             let password = Password::new().with_prompt("Password").interact().expect("Failed getting password");
             config = Config::from_file(path, &password).expect("Failed opening config");
         } else {

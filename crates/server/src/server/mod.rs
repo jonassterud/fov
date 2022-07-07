@@ -9,8 +9,6 @@ use warp::Filter;
 pub struct Server {
     /// Portfolio connected to this server
     portfolio: Portfolio,
-    /// Configuration struct
-    config: Config,
 }
 
 impl Server {
@@ -22,7 +20,6 @@ impl Server {
     pub fn new(config: Config) -> Server {
         Server {
             portfolio: Portfolio::new(&config),
-            config: config,
         }
     }
 

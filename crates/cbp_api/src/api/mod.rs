@@ -50,7 +50,7 @@ impl API {
         Ok(out)
     }
 
-    /// Get UNIX timestamp in seconds as string
+    /// Get UNIX timestamp in seconds as a String
     pub fn access_timestamp(&self) -> Result<String> {
         Ok(SystemTime::now().duration_since(UNIX_EPOCH)?.as_secs().to_string())
     }
