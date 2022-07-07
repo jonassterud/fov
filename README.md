@@ -7,13 +7,7 @@
 You can download the application from the [releases](https://github.com/jonassterud/fov/releases) section here on GitHub.
 
 ## Configuration
-For the application to get access to your financial data, you need to provide the different API keys in a file called `secrets.toml`. These tokens will allow this program to get a lot of control over the different platforms. Here is how the file is supposed to be structured:
-```toml
-sparebank1_access_token = "<YOUR SPAERBANK 1 API ACCESS TOKEN>"
-cbp_key = <"YOUR COINBASE PRO API KEY">
-cbp_secret = <"YOUR COINBASE PRO API SECRET">
-cbp_passphrase = <"YOUR COINBASE PRO API PASSPHRASE">
-```
+When you first run the program, you are asked what APIs you want to enable and then you are asked to provide the different API keys, etc. The data is then stored in an encrypted file called `secret.toml`.
 
 ## Contributing
 Feel free to contribute!

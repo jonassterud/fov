@@ -14,10 +14,7 @@ impl API {
     pub async fn currencies_currency_id(&self, currency_id: &str) -> Result<Currency> {
         let resp = self
             .client
-            .get(format!(
-                "https://api.exchange.coinbase.com/currencies/{}",
-                currency_id
-            ))
+            .get(format!("https://api.exchange.coinbase.com/currencies/{}", currency_id))
             .header(
                 header::USER_AGENT,
                 "Mozilla/5.0 (X11; Linux x86_64; rv:101.0) Gecko/20100101 Firefox/101.0",
@@ -44,14 +41,8 @@ impl API {
             .get("https://api.exchange.coinbase.com/accounts")
             .header(header::ACCEPT, "application/json")
             .header(HeaderName::from_bytes(b"CB-ACCESS-KEY")?, self.access_key())
-            .header(
-                HeaderName::from_bytes(b"CB-ACCESS-TIMESTAMP")?,
-                &timestamp.clone(),
-            )
-            .header(
-                HeaderName::from_bytes(b"CB-ACCESS-PASSPHRASE")?,
-                self.access_passphrase(),
-            )
+            .header(HeaderName::from_bytes(b"CB-ACCESS-TIMESTAMP")?, &timestamp.clone())
+            .header(HeaderName::from_bytes(b"CB-ACCESS-PASSPHRASE")?, self.access_passphrase())
             .header(
                 HeaderName::from_bytes(b"CB-ACCESS-SIGN")?,
                 self.access_sign(&timestamp.clone(), "GET", "/accounts", "")?,
@@ -77,10 +68,7 @@ impl API {
     pub async fn products_product_id_ticker(&self, product_id: &str) -> Result<ProductTicker> {
         let resp = self
             .client
-            .get(format!(
-                "https://api.exchange.coinbase.com/products/{}/ticker",
-                product_id
-            ))
+            .get(format!("https://api.exchange.coinbase.com/products/{}/ticker", product_id))
             .header(
                 header::USER_AGENT,
                 "Mozilla/5.0 (X11; Linux x86_64; rv:101.0) Gecko/20100101 Firefox/101.0",

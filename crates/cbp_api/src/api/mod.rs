@@ -39,13 +39,7 @@ impl API {
     /// * `method` - HTTP method
     /// * `request_path` - endpoint
     /// * `body` - body to send
-    pub fn access_sign(
-        &self,
-        timestamp: &str,
-        method: &str,
-        request_path: &str,
-        body: &str,
-    ) -> Result<String> {
+    pub fn access_sign(&self, timestamp: &str, method: &str, request_path: &str, body: &str) -> Result<String> {
         let message = format!("{}{}{}{}", timestamp, method, request_path, body);
         let secret_decoded = base64::decode(&self.secret)?;
         let mut hmac: Hmac<Sha256> = Hmac::new_from_slice(&secret_decoded)?;
@@ -56,12 +50,9 @@ impl API {
         Ok(out)
     }
 
-    /// Get UNIX timestamp in seconds as string
+    /// Get UNIX timestamp in seconds as a String
     pub fn access_timestamp(&self) -> Result<String> {
-        Ok(SystemTime::now()
-            .duration_since(UNIX_EPOCH)?
-            .as_secs()
-            .to_string())
+        Ok(SystemTime::now().duration_since(UNIX_EPOCH)?.as_secs().to_string())
     }
 
     /// Get the key
