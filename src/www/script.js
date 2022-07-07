@@ -4,42 +4,18 @@ var assets = [];
 
 // Events
 window.onload = () => {
-    try {
-        load_all_assets().then(() => {
-            create_diversification_chart();
-        });
-    } catch (error) {
+    Promise.all([
+        load_assets("sb1/assets", "SpareBank 1"),
+        load_assets("cbp/assets", "Coinbase Pro"),
+        load_assets("nn/assets", "Nordnet"),
+    ]).then(() => {
+        create_diversification_chart();
+    }).catch(error => {
         console.error(error);
-    }
+    });
 }
 
 // Asset functions
-function load_all_assets() {
-    return Promise.all([
-        load_sb1_assets(),
-        load_cbp_assets(),
-        load_nn_assets()
-    ]);
-}
-
-function load_sb1_assets() {
-    return load_assets("sb1/assets").then(data => {
-        add_assets_to_table(data, "SpareBank 1")
-    });
-}
-
-function load_cbp_assets() {
-    return load_assets("cbp/assets").then(data => {
-        add_assets_to_table(data, "Coinbase Pro")
-    });
-}
-
-function load_nn_assets() {
-    return load_assets("nn/assets").then(data => {
-        add_assets_to_table(data, "Nordnet")
-    });
-}
-
 function add_assets_to_table(data, title) {
     let table_body = document.getElementById("asset_table");
     if (table_body === null) {
@@ -86,15 +62,15 @@ function add_assets_to_table(data, title) {
     total_value_cell.innerHTML = Math.round(total_value) + " NOK";
 }
 
-function load_assets(path) {
+function load_assets(path, title) {
     return fetch(window.location.href + path)
         .then(res => {
             if (!res.ok) {
                 throw new Error(`API request failed with status ${res.status}`);
+            } else {
+                return res.json().then(data => add_assets_to_table(data, title));
             }
-
-            return res.json();
-        })
+        });
 }
 
 // Diversification functions
@@ -115,14 +91,12 @@ function create_diversification_chart() {
         let procentage = asset.value / total_value;
 
         // Skip assets with a too low procentage
-        if (procentage <= 0.01) {
-            return;
-        }
+        if (procentage <= 0.01) return;
 
         let angle = procentage * Math.PI * 2;
         let random_color = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
         
-        // Add to list
+        // Create list item
         list_items += `<li><span style="color: ${random_color}">▣  </span>${name}</li>`;
 
         // Draw pie
@@ -138,5 +112,6 @@ function create_diversification_chart() {
         prev_angle += angle;
     });
 
+    // Add to list
     ul.innerHTML += list_items;
 }
