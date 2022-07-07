@@ -1,37 +1,42 @@
+// Global variables
 var total_value = 0;
+var assets = [];
 
+// Events
 window.onload = () => {
-    load_all_assets();
+    try {
+        load_all_assets().then(() => {
+            create_diversification_chart();
+        });
+    } catch (error) {
+        console.error(error);
+    }
 }
 
+// Asset functions
 function load_all_assets() {
-    load_sb1_assets();
-    load_cbp_assets();
-    load_nn_assets();
-    // ...
+    return Promise.all([
+        load_sb1_assets(),
+        load_cbp_assets(),
+        load_nn_assets()
+    ]);
 }
 
 function load_sb1_assets() {
-    load_assets("sb1/assets").then(data => {
+    return load_assets("sb1/assets").then(data => {
         add_assets_to_table(data, "SpareBank 1")
-    }).catch(error => {
-        console.error(error);
     });
 }
 
 function load_cbp_assets() {
-    load_assets("cbp/assets").then(data => {
+    return load_assets("cbp/assets").then(data => {
         add_assets_to_table(data, "Coinbase Pro")
-    }).catch(error => {
-        console.error(error);
     });
 }
 
 function load_nn_assets() {
-    load_assets("nn/assets").then(data => {
+    return load_assets("nn/assets").then(data => {
         add_assets_to_table(data, "Nordnet")
-    }).catch(error => {
-        console.error(error);
     });
 }
 
@@ -47,6 +52,8 @@ function add_assets_to_table(data, title) {
 
     // Add assets
     data.forEach(asset => {
+        assets.push(asset);
+
         // Add name and description together
         let name = asset.name + (asset.description ? ` - ${asset.description}` : "");
         // Only show ticker if currency/ticker is not NOK
@@ -88,4 +95,42 @@ function load_assets(path) {
 
             return res.json();
         })
+}
+
+// Diversification functions
+function create_diversification_chart() {
+    let diversification = document.getElementById("diversification");
+    let ul = document.getElementById("diversification_overview");
+    let c = document.getElementById("diversification_chart");
+    let cx = c.getContext("2d");
+
+    if (diversification === null || c === null || ul === null) {
+        return new Error("Failed getting one or more HTML elements");
+    }
+
+    let list_items = "";
+    let prev_angle = 0;
+    assets.forEach(asset => {
+        let name = asset.name;
+        let procentage = asset.value / total_value;
+        let angle = procentage * Math.PI * 2;
+        let random_color = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
+        
+        // Add to list
+        list_items += `<li><span style="color: ${random_color}">▣  </span>${name}</li>`;
+
+        // Draw pie
+        cx.strokeStyle = "white";
+        cx.fillStyle = random_color;
+        cx.beginPath();
+        cx.arc(c.width/2, c.height/2, c.width/2, prev_angle, prev_angle + angle, false);
+        cx.lineTo(c.width/2, c.height/2);
+        cx.closePath();
+        cx.fill();
+        cx.stroke();
+
+        prev_angle += angle;
+    });
+
+    ul.innerHTML += list_items;
 }

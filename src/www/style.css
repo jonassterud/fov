@@ -35,3 +35,13 @@ tfoot {
     background-color: var(--background-color-1);
     font-style: italic;
 }
+
+#diversification {
+    display: flex;
+    margin: 10px;
+}
+
+#diversification #diversification_overview {
+    color: var(--text-color);
+    list-style: none;
+}
