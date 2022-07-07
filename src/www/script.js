@@ -1,3 +1,5 @@
+var total_value = 0;
+
 window.onload = () => {
     load_all_assets();
 }
@@ -53,7 +55,9 @@ function add_assets_to_table(data, title) {
         let balance = asset.currency === "NOK" ? "" : asset.balance;
         // Calculate value of asset in NOK
         let value = Math.round(asset.value) + " NOK";
+        total_value += asset.value;
 
+        // Add asset into table 
         let table_row = `
         <tr>
             <td headers="name">${name}</td>
@@ -64,6 +68,15 @@ function add_assets_to_table(data, title) {
 
         table_body.innerHTML += table_row;
     });
+
+    // Update total value
+    let total_value_cell = document.getElementById("total_value");
+
+    if (total_value_cell === null) {
+        throw new Error("Failed getting td with id: total_value");
+    }
+
+    total_value_cell.innerHTML = Math.round(total_value) + " NOK";
 }
 
 function load_assets(path) {
