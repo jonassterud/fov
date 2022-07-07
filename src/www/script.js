@@ -113,6 +113,12 @@ function create_diversification_chart() {
     assets.forEach(asset => {
         let name = asset.name;
         let procentage = asset.value / total_value;
+
+        // Skip assets with a too low procentage
+        if (procentage <= 0.01) {
+            return;
+        }
+
         let angle = procentage * Math.PI * 2;
         let random_color = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
         
