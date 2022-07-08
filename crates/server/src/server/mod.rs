@@ -16,7 +16,7 @@ impl Server {
     ///
     /// # Arguments
     ///
-    /// * `config` - A `Config` struct to use for this server + portfolio
+    /// * `config` - A `Config` to use for this server
     pub fn new(config: Config) -> Server {
         Server {
             portfolio: Portfolio::new(&config),
@@ -32,14 +32,11 @@ impl Server {
         self.portfolio.add_cbp_assets().await?;
 
         // Create API paths
-        let cbp_assets =
-            warp::path!("cbp" / "assets").map(move || serde_json::to_string(&self.portfolio.cbp_assets).expect("Failed serializing Asset"));
+        let cbp_assets = warp::path!("cbp" / "assets").map(move || serde_json::to_string(&self.portfolio.cbp_assets).unwrap());
 
-        let nn_assets =
-            warp::path!("nn" / "assets").map(move || serde_json::to_string(&self.portfolio.nn_assets).expect("Failed serializing Asset"));
+        let nn_assets = warp::path!("nn" / "assets").map(move || serde_json::to_string(&self.portfolio.nn_assets).unwrap());
 
-        let sb1_assets =
-            warp::path!("sb1" / "assets").map(move || serde_json::to_string(&self.portfolio.sb1_assets).expect("Failed serializing Asset"));
+        let sb1_assets = warp::path!("sb1" / "assets").map(move || serde_json::to_string(&self.portfolio.sb1_assets).unwrap());
 
         // Create website paths
         let html = warp::path!().and(warp::fs::file("/home/jonassterud/Documents/fov/src/www/index.html"));

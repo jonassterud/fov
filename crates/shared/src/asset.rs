@@ -6,7 +6,7 @@ pub struct Asset {
     /// Name of the asset
     pub name: String,
     /// Description of the asset
-    pub description: Option<String>,
+    pub description: String,
     /// Balance of the asset
     pub balance: f64,
     /// Currency of the asset

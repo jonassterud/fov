@@ -1,9 +1,9 @@
-use std::path::PathBuf;
 use anyhow::Result;
 use dialoguer::{Confirm, Password};
 use pwbox::{sodium::Sodium, ErasedPwBox, Eraser, Suite};
 use rand::thread_rng;
 use serde::{Deserialize, Serialize};
+use std::path::PathBuf;
 
 /// Config file for the application
 #[derive(Deserialize, Serialize)]
@@ -72,9 +72,9 @@ impl Config {
     }
 
     /// Encrypts and save `Config` to a file
-    /// 
+    ///
     /// # Arguments
-    /// 
+    ///
     /// * `path` - Where to save the file
     /// * `password` - Password to use for encryption
     pub fn save_to_file(&self, path: PathBuf, password: &str) -> Result<()> {

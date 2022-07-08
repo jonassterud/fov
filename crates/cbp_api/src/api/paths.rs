@@ -6,7 +6,7 @@ use crate::api::API;
 use anyhow::{anyhow, Result};
 use reqwest::{
     header::{self, HeaderName},
-    StatusCode, Url,
+    StatusCode,
 };
 
 impl API {

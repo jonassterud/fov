@@ -43,11 +43,9 @@ impl API {
     ///
     /// * `account_key` - Account key
     pub async fn accounts_account_key(&self, account_key: String) -> Result<AccountDTO> {
-        let url = format!("https://api.sparebank1.no/personal/banking/accounts/{}", account_key);
-
         let resp = self
             .client
-            .get(url)
+            .get(format!("https://api.sparebank1.no/personal/banking/accounts/{}", account_key))
             .header(header::AUTHORIZATION, format!("Bearer {}", self.access_token))
             .header(header::ACCEPT, "application/vnd.sparebank1.v5+json;charset=utf-8")
             .send()
@@ -70,11 +68,12 @@ impl API {
     ///
     /// * `account_key` - Account key
     pub async fn accounts_account_key_details(&self, account_key: String) -> Result<AccountDetailsDTO> {
-        let url = format!("https://api.sparebank1.no/personal/banking/accounts/{}/details", account_key);
-
         let resp = self
             .client
-            .get(url)
+            .get(format!(
+                "https://api.sparebank1.no/personal/banking/accounts/{}/details",
+                account_key
+            ))
             .header(header::AUTHORIZATION, format!("Bearer {}", self.access_token))
             .header(header::ACCEPT, "application/vnd.sparebank1.v5+json;charset=utf-8")
             .send()
@@ -97,11 +96,9 @@ impl API {
     ///
     /// * `account_key` - Account key
     pub async fn accounts_account_key_roles(&self, account_key: String) -> Result<AccountRolesDTO> {
-        let url = format!("https://api.sparebank1.no/personal/banking/accounts/{}/roles", account_key);
-
         let resp = self
             .client
-            .get(url)
+            .get(format!("https://api.sparebank1.no/personal/banking/accounts/{}/roles", account_key))
             .header(header::AUTHORIZATION, format!("Bearer {}", self.access_token))
             .header(header::ACCEPT, "application/vnd.sparebank1.v5+json;charset=utf-8")
             .send()
@@ -124,11 +121,9 @@ impl API {
     ///
     /// * `account_key` - Account key
     pub async fn accounts_account_key_cards(&self, account_key: String) -> Result<AccountRolesDTO> {
-        let url = format!("https://api.sparebank1.no/personal/banking/accounts/{}/cards", account_key);
-
         let resp = self
             .client
-            .get(url)
+            .get(format!("https://api.sparebank1.no/personal/banking/accounts/{}/cards", account_key))
             .header(header::AUTHORIZATION, format!("Bearer {}", self.access_token))
             .header(header::ACCEPT, "application/vnd.sparebank1.v5+json;charset=utf-8")
             .send()
