@@ -1,6 +1,5 @@
 mod assets;
 
-use anyhow::{anyhow, Result};
 use shared::{Asset, Config};
 
 /// Portfolio to hold information on the different assets
