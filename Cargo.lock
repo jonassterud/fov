@@ -188,6 +188,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "crypto_api"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "base64",
+ "hmac",
+ "reqwest",
+ "serde",
+ "sha2",
+ "shared",
+ "tokio",
+]
+
+[[package]]
 name = "dialoguer"
 version = "0.10.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
