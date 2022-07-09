@@ -4,53 +4,54 @@ var assets = [];
 
 // Events
 window.onload = () => {
-    Promise.all([
-        load_assets("sparebank1/assets", "SpareBank 1"),
-        load_assets("coinbasepro/assets", "Coinbase Pro"),
-        load_assets("nordnet/assets", "Nordnet"),
-        load_assets("nownodes/assets", "Cryptocurrency")
-    ]).then(() => {
-        create_diversification_chart();
-    }).catch(error => {
-        console.error(error);
-    });
+    load_assets("assets")
+        .then(() => {
+            create_diversification_chart();
+        }).catch(error => {
+            console.error(error);
+        });
 }
 
 // Asset functions
-function add_assets_to_table(data, title) {
+function add_assets_to_table(data) {
     let table_body = document.getElementById("asset_table");
     if (table_body === null) {
         throw new Error("Failed getting tbody with id: asset_table");
     }
 
-    // Add header for this asset group
-    let table_header = `<tr><th scope="row" rowspan="${data.length + 1}">${title}</th></tr>`;
-    table_body.innerHTML += table_header;
+    data.forEach(asset_group => {
+        let title = asset_group[0];
+        let assets = asset_group[1];
 
-    // Add assets
-    data.forEach(asset => {
-        assets.push(asset);
+        // Add header for this asset group
+        let table_header = `<tr><th scope="row" rowspan="${assets.length + 1}">${title}</th></tr>`;
+        table_body.innerHTML += table_header;
 
-        // Add name and description together
-        let name = asset.name + (asset.description ? ` - ${asset.description}` : "");
-        // Only show ticker if currency/ticker is not NOK
-        let ticker = asset.currency === "NOK" ? "" : asset.currency;
-        // Only show balance if currency/ticker is not NOK
-        let balance = asset.currency === "NOK" ? "" : asset.balance;
-        // Calculate value of asset in NOK
-        let value = Math.round(asset.value) + " NOK";
-        total_value += asset.value;
+        // Add assets
+        assets.forEach(asset => {
+            assets.push(asset);
 
-        // Add asset into table 
-        let table_row = `
-        <tr>
-            <td headers="name">${name}</td>
-            <td headers="ticker">${ticker}</td>
-            <td headers="balance">${balance}</td>
-            <td headers="value">${value}</td>
-        </tr>`;
+            // Add name and description together
+            let name = asset.name + (asset.description ? ` - ${asset.description}` : "");
+            // Only show ticker if currency/ticker is not NOK
+            let ticker = asset.currency === "NOK" ? "" : asset.currency;
+            // Only show balance if currency/ticker is not NOK
+            let balance = asset.currency === "NOK" ? "" : asset.balance;
+            // Calculate value of asset in NOK
+            let value = Math.round(asset.value) + " NOK";
+            total_value += asset.value;
 
-        table_body.innerHTML += table_row;
+            // Add asset into table 
+            let table_row = `
+            <tr>
+                <td headers="name">${name}</td>
+                <td headers="ticker">${ticker}</td>
+                <td headers="balance">${balance}</td>
+                <td headers="value">${value}</td>
+            </tr>`;
+
+            table_body.innerHTML += table_row;
+        });
     });
 
     // Update total value
@@ -96,7 +97,7 @@ function create_diversification_chart() {
 
         let angle = procentage * Math.PI * 2;
         let random_color = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
-        
+
         // Create list item
         list_items += `<li><span style="color: ${random_color}">▣  </span>${name}</li>`;
 
@@ -104,8 +105,8 @@ function create_diversification_chart() {
         cx.strokeStyle = "white";
         cx.fillStyle = random_color;
         cx.beginPath();
-        cx.arc(c.width/2, c.height/2, c.width/2, prev_angle, prev_angle + angle, false);
-        cx.lineTo(c.width/2, c.height/2);
+        cx.arc(c.width / 2, c.height / 2, c.width / 2, prev_angle, prev_angle + angle, false);
+        cx.lineTo(c.width / 2, c.height / 2);
         cx.closePath();
         cx.fill();
         cx.stroke();

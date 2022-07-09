@@ -7,6 +7,8 @@ impl Portfolio {
     pub async fn add_coinbasepro_assets(&mut self) -> Result<()> {
         let api = self.coinbasepro_api.as_ref().context("no coinbasepro_api")?;
 
+        let mut temp_assets: Vec<Asset> = vec![];
+
         for account in api.accounts().await? {
             // Skip accounts with a balance of 0
             if account.balance == Some("0.0000000000000000".into()) {
@@ -46,8 +48,10 @@ impl Portfolio {
                 value: value,
             };
 
-            self.cbp_assets.push(asset);
+            temp_assets.push(asset);
         }
+
+        self.assets.push(("Coinbase Pro".into(), temp_assets));
 
         Ok(())
     }
@@ -60,6 +64,8 @@ impl Portfolio {
     /// Add SpareBank 1 assets to the portfolio
     pub async fn add_sparebank1_assets(&mut self) -> Result<()> {
         let api = self.sparebank1_api.as_ref().context("no sparebank1_api")?;
+
+        let mut temp_assets: Vec<Asset> = vec![];
 
         for account in api
             .accounts(true, true, true, true, true, true, true)
@@ -75,50 +81,54 @@ impl Portfolio {
                 value: account.balance.context("no balance")?,
             };
 
-            self.sb1_assets.push(asset);
+            temp_assets.push(asset);
         }
+
+        self.assets.push(("SpareBank 1".into(), temp_assets));
 
         Ok(())
     }
 
-    /// Add Bitcoin assets to the portfolio
-    pub async fn add_bitcoin_assets(&mut self) -> Result<()> {
+    pub async fn add_nownodes_assets(&mut self) -> Result<()> {
         let api = self.nownodes_api.as_ref().context("no nownodes_api")?;
 
-        let mut asset = Asset {
-            name: "Bitcoin".into(),
-            description: "".into(),
-            balance: 0.0,
-            currency: "BTC".into(),
-            value: 0.0,
-        };
+        let mut temp_assets: Vec<Asset> = vec![];
 
-        for utxo in api.btc_utxo().await? {
-            asset.balance += utxo.value.unwrap().parse::<f64>()? / 100000000.0;
+        // Add Bitcoin assets
+        if let Ok(utxos) = api.btc_utxo().await {
+            let mut asset = Asset {
+                name: "Bitcoin".into(),
+                description: "".into(),
+                balance: 0.0,
+                currency: "BTC".into(),
+                value: 0.0,
+            };
+
+            for utxo in utxos {
+                asset.balance += utxo.value.unwrap().parse::<f64>()? / 100000000.0;
+            }
+
+            temp_assets.push(asset);
         }
 
-        self.crypto_assets.push(asset);
+        // Add Litecoin assets
+        if let Ok(utxos) = api.ltc_utxo().await {
+            let mut asset = Asset {
+                name: "Litecoin".into(),
+                description: "".into(),
+                balance: 0.0,
+                currency: "LTC".into(),
+                value: 0.0,
+            };
 
-        Ok(())
-    }
+            for utxo in utxos {
+                asset.balance += utxo.value.unwrap().parse::<f64>()? / 100000000.0;
+            }
 
-    /// Add Litecoin assets to the portfolio
-    pub async fn add_ltc_assets(&mut self) -> Result<()> {
-        let api = self.nownodes_api.as_ref().context("no nownodes_api")?;
-
-        let mut asset = Asset {
-            name: "Litecoin".into(),
-            description: "".into(),
-            balance: 0.0,
-            currency: "LTC".into(),
-            value: 0.0,
-        };
-
-        for utxo in api.ltc_utxo().await? {
-            asset.balance += utxo.value.unwrap().parse::<f64>()? / 100000000.0;
+            temp_assets.push(asset);
         }
 
-        self.crypto_assets.push(asset);
+        self.assets.push(("Crypto".into(), temp_assets));
 
         Ok(())
     }

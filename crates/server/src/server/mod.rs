@@ -31,15 +31,11 @@ impl Server {
         // Update Coinbase Pro assets
         self.portfolio.add_coinbasepro_assets().await?;
 
-        // Update Crypto assets
-        self.portfolio.add_bitcoin_assets().await?;
-        self.portfolio.add_ltc_assets().await?;
+        // Update NOWNodes assets
+        self.portfolio.add_nownodes_assets().await?;
 
         // Create API paths
-        let cbp_assets = warp::path!("coinbasepro" / "assets").map(move || serde_json::to_string(&self.portfolio.cbp_assets).unwrap());
-        let nn_assets = warp::path!("nordnet" / "assets").map(move || serde_json::to_string(&self.portfolio.nn_assets).unwrap());
-        let sb1_assets = warp::path!("sparebank1" / "assets").map(move || serde_json::to_string(&self.portfolio.sb1_assets).unwrap());
-        let crypto_assets = warp::path!("nownodes" / "assets").map(move || serde_json::to_string(&self.portfolio.crypto_assets).unwrap());
+        let assets = warp::path!("assets").map(move || serde_json::to_string(&self.portfolio.assets).unwrap());
 
         // Create website paths
         let html = warp::path!().and(warp::fs::file("/home/jonassterud/Documents/fov/src/www/index.html"));
@@ -48,7 +44,7 @@ impl Server {
 
         // Serve paths and start server
         println!("Server running: http://127.0.0.1:3030");
-        let routes = warp::get().and(cbp_assets.or(nn_assets).or(sb1_assets).or(crypto_assets).or(html).or(css).or(js));
+        let routes = warp::get().and(assets).or(html).or(css).or(js);
         warp::serve(routes).run(([127, 0, 0, 1], 3030)).await;
 
         Ok(())
