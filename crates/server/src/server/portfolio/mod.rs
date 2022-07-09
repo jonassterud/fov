@@ -35,17 +35,9 @@ impl Portfolio {
             sb1_assets: vec![],
             crypto_assets: vec![],
             nn_api: None, // for now
-            cbp_api: Some(cbp_api::API::new(
-                &config.cbp_key,
-                &config.cbp_secret,
-                &config.cbp_passphrase,
-            )),
+            cbp_api: Some(cbp_api::API::new(&config.cbp_key, &config.cbp_secret, &config.cbp_passphrase)),
             sb1_api: Some(sb1_api::API::new(&config.sb1_access_token)),
-            nwn_api: Some(nwn_api::API::new(
-                &config.nwn_key,
-                &config.btc_xpub,
-                &config.ltc_xpub,
-            )),
+            nwn_api: Some(nwn_api::API::new(&config.nwn_key, &config.btc_xpub, &config.ltc_xpub)),
         }
     }
 }
