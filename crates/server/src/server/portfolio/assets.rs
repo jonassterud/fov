@@ -91,8 +91,12 @@ impl Portfolio {
 
     pub async fn add_nownodes_assets(&mut self) -> Result<()> {
         let api = self.nownodes_api.as_ref().context("no nownodes_api")?;
+        let cg_api = self.coingecko_api.as_ref().context("no coingecko_api")?;
 
         let mut temp_assets: Vec<Asset> = vec![];
+
+        // Get crypto prices
+        let prices_nok = cg_api.simple_price_nok(vec!["bitcoin", "litecoin"]).await?;
 
         // Add Bitcoin assets
         if let Ok(utxos) = api.btc_utxo().await {
@@ -107,6 +111,18 @@ impl Portfolio {
             for utxo in utxos {
                 asset.balance += utxo.value.unwrap().parse::<f64>()? / 100000000.0;
             }
+
+            // Calculate value
+            let nok_price = prices_nok
+                .clone()
+                .prices
+                .context("no prices")?
+                .get("bitcoin")
+                .context("no bitcoin")?
+                .nok
+                .context("no nok")?;
+
+            asset.value = asset.balance * nok_price;
 
             temp_assets.push(asset);
         }
@@ -124,6 +140,18 @@ impl Portfolio {
             for utxo in utxos {
                 asset.balance += utxo.value.unwrap().parse::<f64>()? / 100000000.0;
             }
+
+            // Calculate value
+            let nok_price = prices_nok
+                .clone()
+                .prices
+                .context("no prices")?
+                .get("bitcoin")
+                .context("no bitcoin")?
+                .nok
+                .context("no nok")?;
+
+            asset.value = asset.balance * nok_price;
 
             temp_assets.push(asset);
         }

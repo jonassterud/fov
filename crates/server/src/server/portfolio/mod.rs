@@ -14,6 +14,8 @@ pub struct Portfolio {
     pub sparebank1_api: Option<sparebank1_api::API>,
     /// NOWNodes API
     pub nownodes_api: Option<nownodes_api::API>,
+    /// CoinGecko API
+    pub coingecko_api: Option<coingecko_api::API>,
 }
 
 impl Portfolio {
@@ -33,6 +35,7 @@ impl Portfolio {
             )),
             sparebank1_api: Some(sparebank1_api::API::new(&config.sb1_access_token)),
             nownodes_api: Some(nownodes_api::API::new(&config.nwn_key, &config.btc_xpub, &config.ltc_xpub)),
+            coingecko_api: Some(coingecko_api::API::new()),
         }
     }
 }
