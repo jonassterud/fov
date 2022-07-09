@@ -85,20 +85,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c4872d67bab6358e59559027aa3b9157c53d9358c51423c17554809a8858e0f8"
 
 [[package]]
-name = "cbp_api"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "base64",
- "hmac",
- "reqwest",
- "serde",
- "sha2",
- "shared",
- "tokio",
-]
-
-[[package]]
 name = "cc"
 version = "1.0.73"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -120,6 +106,20 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7ee52072ec15386f770805afd189a01c8841be8696bed250fa2f13c4c0d6dfb7"
 dependencies = [
  "generic-array",
+]
+
+[[package]]
+name = "coinbasepro_api"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "base64",
+ "hmac",
+ "reqwest",
+ "serde",
+ "sha2",
+ "shared",
+ "tokio",
 ]
 
 [[package]]
@@ -729,11 +729,22 @@ dependencies = [
 ]
 
 [[package]]
-name = "nn_api"
+name = "nordnet_api"
 version = "0.1.0"
 dependencies = [
  "anyhow",
  "shared",
+]
+
+[[package]]
+name = "nownodes_api"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "reqwest",
+ "serde",
+ "shared",
+ "tokio",
 ]
 
 [[package]]
@@ -1060,17 +1071,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "sb1_api"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "reqwest",
- "serde",
- "shared",
- "tokio",
-]
-
-[[package]]
 name = "schannel"
 version = "0.1.20"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1176,12 +1176,13 @@ name = "server"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "cbp_api",
- "nn_api",
- "sb1_api",
+ "coinbasepro_api",
+ "nordnet_api",
+ "nownodes_api",
  "serde",
  "serde_json",
  "shared",
+ "sparebank1_api",
  "warp",
 ]
 
@@ -1225,7 +1226,6 @@ name = "shared"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "dialoguer",
  "pwbox",
  "rand",
  "serde",
@@ -1261,6 +1261,17 @@ checksum = "66d72b759436ae32898a2af0a14218dbf55efde3feeb170eb623637db85ee1e0"
 dependencies = [
  "libc",
  "winapi",
+]
+
+[[package]]
+name = "sparebank1_api"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "reqwest",
+ "serde",
+ "shared",
+ "tokio",
 ]
 
 [[package]]

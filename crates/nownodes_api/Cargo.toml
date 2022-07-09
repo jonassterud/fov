@@ -1,15 +1,15 @@
 [package]
-name = "sb1_api"
+name = "nownodes_api"
 version = "0.1.0"
 authors = ["Jonas Mathisrud Sterud <jonas.sterud@gmail.com>"]
-description = "Get an overview of your finances - SpareBank 1 API crate."
+description = "Get an overview of your finances - NOWNodes API crate."
 repository = "https://github.com/jonassterud/fov"
 license = "MIT"
 edition = "2021"
 
 [dependencies]
 shared = { path = "../shared" }
+serde = { version = "1.0.137", features = ["derive"] }
 tokio = { version = "1.19.2", features = ["full"] }
 reqwest = { version = "0.11.11", features = ["json"] }
-serde = { version = "1.0.137", features = ["derive"] }
 anyhow = "1.0.57"

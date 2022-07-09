@@ -1,5 +1,5 @@
 use crate::api::API;
-use anyhow::{Result};
+use anyhow::Result;
 
 impl API {
     pub fn something() -> Result<()> {
