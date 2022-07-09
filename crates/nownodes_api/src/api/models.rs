@@ -8,7 +8,7 @@ pub mod btc {
 
     #[derive(Deserialize, Clone, Debug)]
     #[serde(rename_all = "camelCase")]
-    pub struct UTXO {
+    pub struct Utxo {
         pub txid: Option<String>,
         pub vout: Option<u32>,
         pub value: Option<String>,
@@ -22,7 +22,7 @@ pub mod ltc {
 
     #[derive(Deserialize, Clone, Debug)]
     #[serde(rename_all = "camelCase")]
-    pub struct UTXO {
+    pub struct Utxo {
         pub txid: Option<String>,
         pub vout: Option<u32>,
         pub value: Option<String>,

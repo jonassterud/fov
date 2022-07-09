@@ -17,7 +17,7 @@ impl Portfolio {
 
             // Calculate asset value
             let currency_id = account.currency.as_ref().context("no currency")?;
-            let currency = api.currencies_currency_id(&currency_id).await?;
+            let currency = api.currencies_currency_id(currency_id).await?;
             let currency_details = currency.details.context("no details")?;
             let currency_type = currency_details._type.context("no type")?;
 
@@ -45,7 +45,7 @@ impl Portfolio {
                 description: "".into(),
                 balance: account.balance.context("no balance")?.parse()?,
                 currency: account.currency.context("no currency")?,
-                value: value,
+                value,
             };
 
             temp_assets.push(asset);
@@ -75,7 +75,7 @@ impl Portfolio {
         {
             let asset = Asset {
                 name: account.name.context("no name")?,
-                description: account.description.unwrap_or("".into()),
+                description: account.description.unwrap_or_else(|| "".into()),
                 balance: 0.0,
                 currency: account.currency_code.context("no currency_code")?,
                 value: account.balance.context("no balance")?,
