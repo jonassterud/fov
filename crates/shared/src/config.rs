@@ -1,92 +1,110 @@
 use anyhow::Result;
-use dialoguer::{Confirm, Password};
 use pwbox::{sodium::Sodium, ErasedPwBox, Eraser, Suite};
 use rand::thread_rng;
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 
 /// Config file for the application
-#[derive(Deserialize, Serialize, Debug)]
+#[derive(Deserialize, Serialize)]
 pub struct Config {
     /// OAuth access token for the SpareBank 1 API (sb1_api)
-    pub sb1_access_token: Option<String>,
+    pub sb1_access_token: String,
     /// API key for the Coinbase Pro API (cbp_api)
-    pub cbp_key: Option<String>,
+    pub cbp_key: String,
     /// API key secret for the Coinbase Pro API (cbp_api)
-    pub cbp_secret: Option<String>,
+    pub cbp_secret: String,
     /// API key passphrase for the Coinbase Pro API (cbp_api)
-    pub cbp_passphrase: Option<String>,
+    pub cbp_passphrase: String,
     /// API key for NOWNodes (crypto_api)
-    pub nwn_key: Option<String>,
+    pub nwn_key: String,
     /// Bitcoin XPUB
-    pub btc_xpub: Option<String>,
+    pub btc_xpub: String,
     /// Litecoin XPUB
-    pub ltc_xpub: Option<String>,
+    pub ltc_xpub: String,
 }
 
 impl Config {
     /// Returns a new empty `Config`
     pub fn new_empty() -> Config {
         Config {
-            sb1_access_token: None,
-            cbp_key: None,
-            cbp_secret: None,
-            cbp_passphrase: None,
-            nwn_key: None,
-            btc_xpub: None,
-            ltc_xpub: None,
+            sb1_access_token: "".into(),
+            cbp_key: "".into(),
+            cbp_secret: "".into(),
+            cbp_passphrase: "".into(),
+            nwn_key: "".into(),
+            btc_xpub: "".into(),
+            ltc_xpub: "".into(),
         }
     }
 
-    /// Returns a `Config` based on a TOML configuration file
+    /// Create a `Config` based on a TOML configuration file and the current configuration
     ///
     /// # Arguments
     ///
-    /// * `path` - The path to the config file
-    /// * `password` - Password to decrypt file
-    pub fn from_file(path: PathBuf, password: &str) -> Result<Config> {
-        let content = std::fs::read_to_string(path)?;
-        let pwbox = toml::from_str(&content)?;
-        let pwbox = Eraser::new().add_suite::<Sodium>().restore(&pwbox)?;
+    /// * `config_path` - path to the config (config.toml)
+    /// * `secret_path` - path to the encrypted config (secret.toml)
+    pub fn open(config_path: &PathBuf, secret_path: &PathBuf, password: &str) -> Result<Config> {
+        // Open unencrypted config
+        let config_content = std::fs::read(config_path)?;
+        let config_unencrypted = toml::from_slice::<Config>(&config_content)?;
 
-        let decrypted = pwbox.open(password)?;
-        let config = toml::from_slice::<Config>(&decrypted)?;
+        // Open encrypted config
+        let config_encrypted: Config;
+        if secret_path.exists() {
+            let secret_content = std::fs::read(secret_path)?;
+            let pwbox = toml::from_slice(&secret_content)?;
+            let pwbox = Eraser::new().add_suite::<Sodium>().restore(&pwbox)?;
 
-        println!("{:?}", config);
+            let decrypted = pwbox.open(password)?;
+            config_encrypted = toml::from_slice::<Config>(&decrypted)?;
+        } else {
+            config_encrypted = Config::new_empty();
+        }
 
-        Ok(config)
+        let out = Config::combine(config_encrypted, config_unencrypted);
+
+        // Save encrypted config
+        out.save_to_file(secret_path, password)?;
+
+        // Reset unencrypted config
+        std::fs::write(config_path, toml::to_string_pretty(&Config::new_empty())?)?;
+
+        Ok(out)
     }
 
-    /// Prompts the user for information and returns a `Config`
-    pub fn from_cli() -> Result<Config> {
-        let sb1_active = Confirm::new().with_prompt("Enable SpareBank 1 API?").default(true).interact()?;
-        let cbp_active = Confirm::new().with_prompt("Enable Coinbase Pro API?").default(true).interact()?;
-        let nn_active = Confirm::new().with_prompt("Enable Nordnet API?").default(true).interact()?;
-        let nwn_active = Confirm::new().with_prompt("Enable NOWNodes API?").default(true).interact()?;
+    /// Combine two `Config`'s but prioritize one over the other
+    ///
+    /// # Arguments
+    ///
+    /// * `og` - the config that should not be prioritized
+    /// * `new` - the config that should be prioritized
+    fn combine(og: Config, new: Config) -> Config {
+        // TODO: Refactor
+        let sb1_access_token = if new.sb1_access_token == "" {
+            og.sb1_access_token
+        } else {
+            new.sb1_access_token
+        };
+        let cbp_key = if new.cbp_key == "" { og.cbp_key } else { new.cbp_key };
+        let cbp_secret = if &new.cbp_secret == "" { og.cbp_secret } else { new.cbp_secret };
+        let cbp_passphrase = if new.cbp_passphrase == "" {
+            og.cbp_passphrase
+        } else {
+            new.cbp_passphrase
+        };
+        let nwn_key = if new.nwn_key == "" { og.nwn_key } else { new.nwn_key };
+        let btc_xpub = if &new.btc_xpub == "" { og.btc_xpub } else { new.btc_xpub };
+        let ltc_xpub = if new.ltc_xpub == "" { og.ltc_xpub } else { new.ltc_xpub };
 
-        let mut config = Config::new_empty();
-
-        if sb1_active {
-            config.sb1_access_token = Some(Password::new().with_prompt("SpareBank 1 access token").interact()?);
+        Config {
+            sb1_access_token,
+            cbp_key,
+            cbp_secret,
+            cbp_passphrase,
+            nwn_key,
+            btc_xpub,
+            ltc_xpub,
         }
-
-        if cbp_active {
-            config.cbp_key = Some(Password::new().with_prompt("Coinbase Pro API key").interact()?);
-            config.cbp_secret = Some(Password::new().with_prompt("Coinbase Pro API secret").interact()?);
-            config.cbp_passphrase = Some(Password::new().with_prompt("Coinbase Pro API passphrase").interact()?);
-        }
-
-        if nn_active {
-            // ...
-        }
-
-        if nwn_active {
-            config.nwn_key = Some(Password::new().with_prompt("NOWNodes API key").interact()?);
-            config.btc_xpub = Some(Password::new().with_prompt("Bitcoin XPUB").interact()?);
-            config.ltc_xpub = Some(Password::new().with_prompt("Litecoin XPUB").interact()?);
-        }
-
-        Ok(config)
     }
 
     /// Encrypts and save `Config` to a file
@@ -95,7 +113,7 @@ impl Config {
     ///
     /// * `path` - Where to save the file
     /// * `password` - Password to use for encryption
-    pub fn save_to_file(&self, path: PathBuf, password: &str) -> Result<()> {
+    fn save_to_file(&self, path: &PathBuf, password: &str) -> Result<()> {
         let pwbox = Sodium::build_box(&mut thread_rng()).seal(password, toml::to_string(self)?)?;
         let mut eraser = Eraser::new();
         eraser.add_suite::<Sodium>();

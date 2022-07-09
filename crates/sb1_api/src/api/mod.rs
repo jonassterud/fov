@@ -13,10 +13,10 @@ impl API {
     /// # Arguments
     ///
     /// * `access_token` - OAuth access token
-    pub fn new(access_token: String) -> API {
+    pub fn new(access_token: &str) -> API {
         API {
             client: reqwest::Client::new(),
-            access_token: access_token,
+            access_token: access_token.into(),
         }
     }
 }

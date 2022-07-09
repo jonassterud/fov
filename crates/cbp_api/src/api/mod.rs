@@ -22,12 +22,12 @@ impl API {
     /// * `key` - API key
     /// * `secret` - API secret
     /// * ``passphrase - API passphrase
-    pub fn new(key: String, secret: String, passphrase: String) -> API {
+    pub fn new(key: &str, secret: &str, passphrase: &str) -> API {
         API {
             client: reqwest::Client::new(),
-            key: key,
-            secret: secret,
-            passphrase: passphrase,
+            key: key.into(),
+            secret: secret.into(),
+            passphrase: passphrase.into(),
         }
     }
 

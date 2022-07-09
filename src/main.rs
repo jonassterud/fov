@@ -8,20 +8,11 @@ use shared::Config;
 async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     // Open config and start server
     let server_handle = tokio::spawn(async {
-        let path = PathBuf::from("/home/jonassterud/Documents/fov/src/secret.toml");
-        let config: Config;
+        let config_path = PathBuf::from("/home/jonassterud/Documents/fov/src/config.toml");
+        let secret_path = PathBuf::from("/home/jonassterud/Documents/fov/src/secret.toml");
 
-        if path.exists() {
-            let password = Password::new().with_prompt("Password").interact().expect("Failed getting password");
-            config = Config::from_file(path, &password).expect("Failed opening config");
-        } else {
-            config = Config::from_cli().expect("Failed creating config");
-            let password = Password::new()
-                .with_prompt("Enter new password")
-                .interact()
-                .expect("Failed getting password");
-            config.save_to_file(path, &password).expect("Failed saving config");
-        }
+        let password = Password::new().with_prompt("Enter password").interact().unwrap();
+        let config = Config::open(&config_path, &secret_path, &password).unwrap();
 
         Server::new(config).start().await.expect("Server failed");
     });

@@ -15,10 +15,7 @@ impl API {
         let resp = self
             .client
             .get(format!("https://btcbook.nownodes.io/api/v2/utxo/{}", self.btc_xpub))
-            .header(
-                HeaderName::from_bytes(b"api-key")?,
-                self.key.clone(),
-            )
+            .header(HeaderName::from_bytes(b"api-key")?, self.key.clone())
             .header(header::ACCEPT, "application/json")
             .send()
             .await?;
@@ -42,10 +39,7 @@ impl API {
         let resp = self
             .client
             .get(format!("https://ltcbook.nownodes.io/api/v2/utxo/{}", self.ltc_xpub))
-            .header(
-                HeaderName::from_bytes(b"api-key")?,
-                self.key.clone(),
-            )
+            .header(HeaderName::from_bytes(b"api-key")?, self.key.clone())
             .header(header::ACCEPT, "application/json")
             .send()
             .await?;
