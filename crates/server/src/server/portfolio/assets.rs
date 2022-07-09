@@ -83,7 +83,7 @@ impl Portfolio {
 
     /// Add Bitcoin assets to the portfolio
     pub async fn add_btc_crypto_assets(&mut self) -> Result<()> {
-        let api = self.crypto_api.as_ref().context("no crypto_api")?;
+        let api = self.nwn_api.as_ref().context("no nwn_api")?;
 
         let mut asset = Asset {
             name: "Bitcoin".into(),
@@ -104,7 +104,7 @@ impl Portfolio {
 
     /// Add Litecoin assets to the portfolio
     pub async fn add_ltc_crypto_assets(&mut self) -> Result<()> {
-        let api = self.crypto_api.as_ref().context("no crypto_api")?;
+        let api = self.nwn_api.as_ref().context("no nwn_api")?;
 
         let mut asset = Asset {
             name: "Litecoin".into(),

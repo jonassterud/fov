@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 
 /// Config file for the application
-#[derive(Deserialize, Serialize)]
+#[derive(Deserialize, Serialize, Debug)]
 pub struct Config {
     /// OAuth access token for the SpareBank 1 API (sb1_api)
     pub sb1_access_token: Option<String>,
@@ -17,11 +17,11 @@ pub struct Config {
     /// API key passphrase for the Coinbase Pro API (cbp_api)
     pub cbp_passphrase: Option<String>,
     /// API key for NOWNodes (crypto_api)
-    pub crypto_key: Option<String>,
+    pub nwn_key: Option<String>,
     /// Bitcoin XPUB
-    pub crypto_btc_xpub: Option<String>,
+    pub btc_xpub: Option<String>,
     /// Litecoin XPUB
-    pub crypto_ltc_xpub: Option<String>,
+    pub ltc_xpub: Option<String>,
 }
 
 impl Config {
@@ -32,9 +32,9 @@ impl Config {
             cbp_key: None,
             cbp_secret: None,
             cbp_passphrase: None,
-            crypto_key: None,
-            crypto_btc_xpub: None,
-            crypto_ltc_xpub: None,
+            nwn_key: None,
+            btc_xpub: None,
+            ltc_xpub: None,
         }
     }
 
@@ -52,6 +52,8 @@ impl Config {
         let decrypted = pwbox.open(password)?;
         let config = toml::from_slice::<Config>(&decrypted)?;
 
+        println!("{:?}", config);
+
         Ok(config)
     }
 
@@ -60,7 +62,7 @@ impl Config {
         let sb1_active = Confirm::new().with_prompt("Enable SpareBank 1 API?").default(true).interact()?;
         let cbp_active = Confirm::new().with_prompt("Enable Coinbase Pro API?").default(true).interact()?;
         let nn_active = Confirm::new().with_prompt("Enable Nordnet API?").default(true).interact()?;
-        let crypto_active = Confirm::new().with_prompt("Enable NOWNodes (Crypto) API?").default(true).interact()?;
+        let nwn_active = Confirm::new().with_prompt("Enable NOWNodes API?").default(true).interact()?;
 
         let mut config = Config::new_empty();
 
@@ -78,10 +80,10 @@ impl Config {
             // ...
         }
 
-        if crypto_active {
-            config.crypto_key = Some(Password::new().with_prompt("NOWNodes API key").interact()?);
-            config.crypto_btc_xpub = Some(Password::new().with_prompt("Bitcoin XPUB").interact()?);
-            config.crypto_ltc_xpub = Some(Password::new().with_prompt("Litecoin XPUB").interact()?);
+        if nwn_active {
+            config.nwn_key = Some(Password::new().with_prompt("NOWNodes API key").interact()?);
+            config.btc_xpub = Some(Password::new().with_prompt("Bitcoin XPUB").interact()?);
+            config.ltc_xpub = Some(Password::new().with_prompt("Litecoin XPUB").interact()?);
         }
 
         Ok(config)

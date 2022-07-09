@@ -188,17 +188,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "crypto_api"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "reqwest",
- "serde",
- "shared",
- "tokio",
-]
-
-[[package]]
 name = "dialoguer"
 version = "0.10.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -758,6 +747,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "nwn_api"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "reqwest",
+ "serde",
+ "shared",
+ "tokio",
+]
+
+[[package]]
 name = "once_cell"
 version = "1.12.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1188,8 +1188,8 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "cbp_api",
- "crypto_api",
  "nn_api",
+ "nwn_api",
  "sb1_api",
  "serde",
  "serde_json",

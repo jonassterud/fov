@@ -1,8 +1,8 @@
 [package]
-name = "crypto_api"
+name = "nwn_api"
 version = "0.1.0"
 authors = ["Jonas Mathisrud Sterud <jonas.sterud@gmail.com>"]
-description = "Get an overview of your finances - Crypto API crate."
+description = "Get an overview of your finances - NOWNodes API crate."
 repository = "https://github.com/jonassterud/fov"
 license = "MIT"
 edition = "2021"
