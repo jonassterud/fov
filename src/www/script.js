@@ -5,10 +5,10 @@ var assets = [];
 // Events
 window.onload = () => {
     Promise.all([
-        load_assets("sb1/assets", "SpareBank 1"),
-        load_assets("cbp/assets", "Coinbase Pro"),
-        load_assets("nn/assets", "Nordnet"),
-        load_assets("crypto/assets", "Cryptocurrency")
+        load_assets("sparebank1/assets", "SpareBank 1"),
+        load_assets("coinbasepro/assets", "Coinbase Pro"),
+        load_assets("nordnet/assets", "Nordnet"),
+        load_assets("nownodes/assets", "Cryptocurrency")
     ]).then(() => {
         create_diversification_chart();
     }).catch(error => {

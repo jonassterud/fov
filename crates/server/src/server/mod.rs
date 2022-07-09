@@ -26,20 +26,20 @@ impl Server {
     /// Start the server
     pub async fn start(mut self) -> Result<()> {
         // Update SpareBank 1 assets
-        self.portfolio.add_sb1_assets().await?;
+        self.portfolio.add_sparebank1_assets().await?;
 
         // Update Coinbase Pro assets
-        self.portfolio.add_cbp_assets().await?;
+        self.portfolio.add_coinbasepro_assets().await?;
 
         // Update Crypto assets
-        self.portfolio.add_btc_crypto_assets().await?;
-        self.portfolio.add_ltc_crypto_assets().await?;
+        self.portfolio.add_bitcoin_assets().await?;
+        self.portfolio.add_ltc_assets().await?;
 
         // Create API paths
-        let cbp_assets = warp::path!("cbp" / "assets").map(move || serde_json::to_string(&self.portfolio.cbp_assets).unwrap());
-        let nn_assets = warp::path!("nn" / "assets").map(move || serde_json::to_string(&self.portfolio.nn_assets).unwrap());
-        let sb1_assets = warp::path!("sb1" / "assets").map(move || serde_json::to_string(&self.portfolio.sb1_assets).unwrap());
-        let crypto_assets = warp::path!("crypto" / "assets").map(move || serde_json::to_string(&self.portfolio.crypto_assets).unwrap());
+        let cbp_assets = warp::path!("coinbasepro" / "assets").map(move || serde_json::to_string(&self.portfolio.cbp_assets).unwrap());
+        let nn_assets = warp::path!("nordnet" / "assets").map(move || serde_json::to_string(&self.portfolio.nn_assets).unwrap());
+        let sb1_assets = warp::path!("sparebank1" / "assets").map(move || serde_json::to_string(&self.portfolio.sb1_assets).unwrap());
+        let crypto_assets = warp::path!("nownodes" / "assets").map(move || serde_json::to_string(&self.portfolio.crypto_assets).unwrap());
 
         // Create website paths
         let html = warp::path!().and(warp::fs::file("/home/jonassterud/Documents/fov/src/www/index.html"));

@@ -13,13 +13,13 @@ pub struct Portfolio {
     /// Crypto assets
     pub crypto_assets: Vec<Asset>,
     /// Coinbase Pro API
-    pub cbp_api: Option<cbp_api::API>,
+    pub coinbasepro_api: Option<coinbasepro_api::API>,
     /// Nordnet API
-    pub nn_api: Option<nn_api::API>,
+    pub nordnet_api: Option<nordnet_api::API>,
     /// SpareBank 1 API
-    pub sb1_api: Option<sb1_api::API>,
-    /// Crypto API
-    pub nwn_api: Option<nwn_api::API>,
+    pub sparebank1_api: Option<sparebank1_api::API>,
+    /// NOWNodes API
+    pub nownodes_api: Option<nownodes_api::API>,
 }
 
 impl Portfolio {
@@ -34,10 +34,10 @@ impl Portfolio {
             nn_assets: vec![],
             sb1_assets: vec![],
             crypto_assets: vec![],
-            nn_api: None, // for now
-            cbp_api: Some(cbp_api::API::new(&config.cbp_key, &config.cbp_secret, &config.cbp_passphrase)),
-            sb1_api: Some(sb1_api::API::new(&config.sb1_access_token)),
-            nwn_api: Some(nwn_api::API::new(&config.nwn_key, &config.btc_xpub, &config.ltc_xpub)),
+            nordnet_api: None, // for now
+            coinbasepro_api: Some(coinbasepro_api::API::new(&config.cbp_key, &config.cbp_secret, &config.cbp_passphrase)),
+            sparebank1_api: Some(sparebank1_api::API::new(&config.sb1_access_token)),
+            nownodes_api: Some(nownodes_api::API::new(&config.nwn_key, &config.btc_xpub, &config.ltc_xpub)),
         }
     }
 }

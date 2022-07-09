@@ -4,8 +4,8 @@ use shared::Asset;
 
 impl Portfolio {
     /// Add Coinbase Pro assets to the portfolio
-    pub async fn add_cbp_assets(&mut self) -> Result<()> {
-        let api = self.cbp_api.as_ref().context("no cbp_api")?;
+    pub async fn add_coinbasepro_assets(&mut self) -> Result<()> {
+        let api = self.coinbasepro_api.as_ref().context("no coinbasepro_api")?;
 
         for account in api.accounts().await? {
             // Skip accounts with a balance of 0
@@ -53,13 +53,13 @@ impl Portfolio {
     }
 
     /// Add Nordnet assets to the portfolio
-    pub async fn _add_nn_asset(&mut self) {
+    pub async fn add_nordnet_asset(&mut self) {
         todo!();
     }
 
     /// Add SpareBank 1 assets to the portfolio
-    pub async fn add_sb1_assets(&mut self) -> Result<()> {
-        let api = self.sb1_api.as_ref().context("no sb1_api")?;
+    pub async fn add_sparebank1_assets(&mut self) -> Result<()> {
+        let api = self.sparebank1_api.as_ref().context("no sparebank1_api")?;
 
         for account in api
             .accounts(true, true, true, true, true, true, true)
@@ -82,8 +82,8 @@ impl Portfolio {
     }
 
     /// Add Bitcoin assets to the portfolio
-    pub async fn add_btc_crypto_assets(&mut self) -> Result<()> {
-        let api = self.nwn_api.as_ref().context("no nwn_api")?;
+    pub async fn add_bitcoin_assets(&mut self) -> Result<()> {
+        let api = self.nownodes_api.as_ref().context("no nownodes_api")?;
 
         let mut asset = Asset {
             name: "Bitcoin".into(),
@@ -103,8 +103,8 @@ impl Portfolio {
     }
 
     /// Add Litecoin assets to the portfolio
-    pub async fn add_ltc_crypto_assets(&mut self) -> Result<()> {
-        let api = self.nwn_api.as_ref().context("no nwn_api")?;
+    pub async fn add_ltc_assets(&mut self) -> Result<()> {
+        let api = self.nownodes_api.as_ref().context("no nownodes_api")?;
 
         let mut asset = Asset {
             name: "Litecoin".into(),
