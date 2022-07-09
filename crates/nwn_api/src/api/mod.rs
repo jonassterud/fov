@@ -15,12 +15,12 @@ impl API {
     /// # Arguments
     ///
     /// * `key` - API key
-    pub fn new(key: String, btc_xpub: String, ltc_xpub: String) -> API {
+    pub fn new(key: &str, btc_xpub: &str, ltc_xpub: &str) -> API {
         API {
             client: reqwest::Client::new(),
-            key: key,
-            btc_xpub: btc_xpub,
-            ltc_xpub: ltc_xpub,
+            key: key.into(),
+            btc_xpub: btc_xpub.into(),
+            ltc_xpub: ltc_xpub.into(),
         }
     }
 }
