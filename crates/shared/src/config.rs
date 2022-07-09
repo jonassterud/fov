@@ -16,6 +16,12 @@ pub struct Config {
     pub cbp_secret: Option<String>,
     /// API key passphrase for the Coinbase Pro API (cbp_api)
     pub cbp_passphrase: Option<String>,
+    /// API key for NOWNodes (crypto_api)
+    pub crypto_key: Option<String>,
+    /// Bitcoin XPUB
+    pub crypto_btc_xpub: Option<String>,
+    /// Litecoin XPUB
+    pub crypto_ltc_xpub: Option<String>,
 }
 
 impl Config {
@@ -26,6 +32,9 @@ impl Config {
             cbp_key: None,
             cbp_secret: None,
             cbp_passphrase: None,
+            crypto_key: None,
+            crypto_btc_xpub: None,
+            crypto_ltc_xpub: None,
         }
     }
 
@@ -51,6 +60,7 @@ impl Config {
         let sb1_active = Confirm::new().with_prompt("Enable SpareBank 1 API?").default(true).interact()?;
         let cbp_active = Confirm::new().with_prompt("Enable Coinbase Pro API?").default(true).interact()?;
         let nn_active = Confirm::new().with_prompt("Enable Nordnet API?").default(true).interact()?;
+        let crypto_active = Confirm::new().with_prompt("Enable NOWNodes (Crypto) API?").default(true).interact()?;
 
         let mut config = Config::new_empty();
 
@@ -66,6 +76,12 @@ impl Config {
 
         if nn_active {
             // ...
+        }
+
+        if crypto_active {
+            config.crypto_key = Some(Password::new().with_prompt("NOWNodes API key").interact()?);
+            config.crypto_btc_xpub = Some(Password::new().with_prompt("Bitcoin XPUB").interact()?);
+            config.crypto_ltc_xpub = Some(Password::new().with_prompt("Litecoin XPUB").interact()?);
         }
 
         Ok(config)

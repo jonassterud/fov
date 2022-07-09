@@ -8,6 +8,7 @@ window.onload = () => {
         load_assets("sb1/assets", "SpareBank 1"),
         load_assets("cbp/assets", "Coinbase Pro"),
         load_assets("nn/assets", "Nordnet"),
+        load_assets("crypto/assets", "Cryptocurrency")
     ]).then(() => {
         create_diversification_chart();
     }).catch(error => {

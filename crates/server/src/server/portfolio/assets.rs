@@ -80,4 +80,46 @@ impl Portfolio {
 
         Ok(())
     }
+
+    /// Add Bitcoin assets to the portfolio
+    pub async fn add_btc_crypto_assets(&mut self) -> Result<()> {
+        let api = self.crypto_api.as_ref().context("no crypto_api")?;
+
+        let mut asset = Asset {
+            name: "Bitcoin".into(),
+            description: "".into(),
+            balance: 0.0,
+            currency: "BTC".into(),
+            value: 0.0,
+        };
+
+        for utxo in api.btc_utxo().await? {
+            asset.balance += utxo.value.unwrap().parse::<f64>()? / 100000000.0;
+        }
+
+        self.crypto_assets.push(asset);
+
+        Ok(())
+    }
+
+    /// Add Litecoin assets to the portfolio
+    pub async fn add_ltc_crypto_assets(&mut self) -> Result<()> {
+        let api = self.crypto_api.as_ref().context("no crypto_api")?;
+
+        let mut asset = Asset {
+            name: "Litecoin".into(),
+            description: "".into(),
+            balance: 0.0,
+            currency: "LTC".into(),
+            value: 0.0,
+        };
+
+        for utxo in api.ltc_utxo().await? {
+            asset.balance += utxo.value.unwrap().parse::<f64>()? / 100000000.0;
+        }
+
+        self.crypto_assets.push(asset);
+
+        Ok(())
+    }
 }

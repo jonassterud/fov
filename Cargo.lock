@@ -192,11 +192,8 @@ name = "crypto_api"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "base64",
- "hmac",
  "reqwest",
  "serde",
- "sha2",
  "shared",
  "tokio",
 ]
@@ -1191,6 +1188,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "cbp_api",
+ "crypto_api",
  "nn_api",
  "sb1_api",
  "serde",
