@@ -1,6 +1,6 @@
 // Global variables
-var total_value = 0;
-var assets = [];
+var global_total_value = 0;
+var global_assets = [];
 
 // Events
 window.onload = () => {
@@ -29,7 +29,7 @@ function add_assets_to_table(data) {
 
         // Add assets
         assets.forEach(asset => {
-            assets.push(asset);
+            global_assets.push(asset);
 
             // Add name and description together
             let name = asset.name + (asset.description ? ` - ${asset.description}` : "");
@@ -39,7 +39,7 @@ function add_assets_to_table(data) {
             let balance = asset.currency === "NOK" ? "" : asset.balance;
             // Calculate value of asset in NOK
             let value = Math.round(asset.value) + " NOK";
-            total_value += asset.value;
+            global_total_value += asset.value;
 
             // Add asset into table 
             let table_row = `
@@ -61,7 +61,7 @@ function add_assets_to_table(data) {
         throw new Error("Failed getting td with id: total_value");
     }
 
-    total_value_cell.innerHTML = Math.round(total_value) + " NOK";
+    total_value_cell.innerHTML = Math.round(global_total_value) + " NOK";
 }
 
 function load_assets(path, title) {
@@ -88,9 +88,9 @@ function create_diversification_chart() {
 
     let list_items = "";
     let prev_angle = 0;
-    assets.forEach(asset => {
+    global_assets.forEach(asset => {
         let name = asset.name;
-        let procentage = asset.value / total_value;
+        let procentage = asset.value / global_total_value;
 
         // Skip assets with a too low procentage
         if (procentage <= 0.01) return;
@@ -102,6 +102,7 @@ function create_diversification_chart() {
         list_items += `<li><span style="color: ${random_color}">▣  </span>${name}</li>`;
 
         // Draw pie
+        // TODO: Bug - the pie chart is not filled completely
         cx.strokeStyle = "white";
         cx.fillStyle = random_color;
         cx.beginPath();
