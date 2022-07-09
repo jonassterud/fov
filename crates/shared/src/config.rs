@@ -79,31 +79,23 @@ impl Config {
     /// * `og` - the config that should not be prioritized
     /// * `new` - the config that should be prioritized
     fn combine(og: Config, new: Config) -> Config {
-        // TODO: Refactor
-        let sb1_access_token = if new.sb1_access_token == "" {
-            og.sb1_access_token
-        } else {
-            new.sb1_access_token
-        };
-        let cbp_key = if new.cbp_key == "" { og.cbp_key } else { new.cbp_key };
-        let cbp_secret = if &new.cbp_secret == "" { og.cbp_secret } else { new.cbp_secret };
-        let cbp_passphrase = if new.cbp_passphrase == "" {
-            og.cbp_passphrase
-        } else {
-            new.cbp_passphrase
-        };
-        let nwn_key = if new.nwn_key == "" { og.nwn_key } else { new.nwn_key };
-        let btc_xpub = if &new.btc_xpub == "" { og.btc_xpub } else { new.btc_xpub };
-        let ltc_xpub = if new.ltc_xpub == "" { og.ltc_xpub } else { new.ltc_xpub };
+        /// Return a if not empty, else return b
+        fn choose(a: String, b: String) -> String {
+            if a != "" {
+                a
+            } else {
+                b
+            }
+        }
 
         Config {
-            sb1_access_token,
-            cbp_key,
-            cbp_secret,
-            cbp_passphrase,
-            nwn_key,
-            btc_xpub,
-            ltc_xpub,
+            sb1_access_token: choose(new.sb1_access_token, og.sb1_access_token),
+            cbp_key: choose(new.cbp_key, og.cbp_key),
+            cbp_secret: choose(new.cbp_secret, og.cbp_secret),
+            cbp_passphrase: choose(new.cbp_passphrase, og.cbp_passphrase),
+            nwn_key: choose(new.nwn_key, og.nwn_key),
+            btc_xpub: choose(new.btc_xpub, og.btc_xpub),
+            ltc_xpub: choose(new.ltc_xpub, og.ltc_xpub),
         }
     }
 
