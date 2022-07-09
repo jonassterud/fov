@@ -4,16 +4,16 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug unit tests in library 'cbp_api'",
+            "name": "Debug unit tests in library 'coinbasepro_api'",
             "cargo": {
                 "args": [
                     "test",
                     "--no-run",
                     "--lib",
-                    "--package=cbp_api"
+                    "--package=coinbasepro_api"
                 ],
                 "filter": {
-                    "name": "cbp_api",
+                    "name": "coinbasepro_api",
                     "kind": "lib"
                 }
             },
@@ -42,16 +42,16 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug unit tests in library 'nn_api'",
+            "name": "Debug unit tests in library 'nordnet_api'",
             "cargo": {
                 "args": [
                     "test",
                     "--no-run",
                     "--lib",
-                    "--package=nn_api"
+                    "--package=nordnet_api"
                 ],
                 "filter": {
-                    "name": "nn_api",
+                    "name": "nordnet_api",
                     "kind": "lib"
                 }
             },
@@ -61,16 +61,16 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug unit tests in library 'sb1_api'",
+            "name": "Debug unit tests in library 'nownodes_api'",
             "cargo": {
                 "args": [
                     "test",
                     "--no-run",
                     "--lib",
-                    "--package=sb1_api"
+                    "--package=nownodes_api"
                 ],
                 "filter": {
-                    "name": "sb1_api",
+                    "name": "nownodes_api",
                     "kind": "lib"
                 }
             },
@@ -90,6 +90,25 @@
                 ],
                 "filter": {
                     "name": "server",
+                    "kind": "lib"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in library 'sparebank1_api'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--lib",
+                    "--package=sparebank1_api"
+                ],
+                "filter": {
+                    "name": "sparebank1_api",
                     "kind": "lib"
                 }
             },
