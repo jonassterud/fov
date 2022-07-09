@@ -91,12 +91,9 @@ impl Portfolio {
 
     pub async fn add_nownodes_assets(&mut self) -> Result<()> {
         let api = self.nownodes_api.as_ref().context("no nownodes_api")?;
-        let cg_api = self.coingecko_api.as_ref().context("no coingecko_api")?;
+        let cbp_api = self.coinbasepro_api.as_ref().context("no cbp_api")?;
 
         let mut temp_assets: Vec<Asset> = vec![];
-
-        // Get crypto prices
-        let prices_nok = cg_api.simple_price_nok(vec!["bitcoin", "litecoin"]).await?;
 
         // Add Bitcoin assets
         if let Ok(utxos) = api.btc_utxo().await {
@@ -113,16 +110,11 @@ impl Portfolio {
             }
 
             // Calculate value
-            let nok_price = prices_nok
-                .clone()
-                .prices
-                .context("no prices")?
-                .get("bitcoin")
-                .context("no bitcoin")?
-                .nok
-                .context("no nok")?;
+            let ticker = cbp_api.products_product_id_ticker("BTC-USD").await?;
+            let ticker_price: f64 = ticker.price.context("no price")?.parse::<f64>()?;
 
-            asset.value = asset.balance * nok_price;
+            // TODO: Get actual USDNOK value instead of using "10.0"
+            asset.value = asset.balance * ticker_price * 10.0;
 
             temp_assets.push(asset);
         }
@@ -142,16 +134,11 @@ impl Portfolio {
             }
 
             // Calculate value
-            let nok_price = prices_nok
-                .clone()
-                .prices
-                .context("no prices")?
-                .get("bitcoin")
-                .context("no bitcoin")?
-                .nok
-                .context("no nok")?;
+            let ticker = cbp_api.products_product_id_ticker("LTC-USD").await?;
+            let ticker_price: f64 = ticker.price.context("no price")?.parse::<f64>()?;
 
-            asset.value = asset.balance * nok_price;
+            // TODO: Get actual USDNOK value instead of using "10.0"
+            asset.value = asset.balance * ticker_price * 10.0;
 
             temp_assets.push(asset);
         }
