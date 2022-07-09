@@ -123,6 +123,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "coingecko_api"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "reqwest",
+ "serde",
+ "serde_json",
+ "shared",
+ "tokio",
+]
+
+[[package]]
 name = "console"
 version = "0.15.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1177,6 +1189,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "coinbasepro_api",
+ "coingecko_api",
  "nordnet_api",
  "nownodes_api",
  "serde",
