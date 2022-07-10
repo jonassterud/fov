@@ -49,17 +49,16 @@ impl Config {
         let config_unencrypted = toml::from_slice::<Config>(&config_content)?;
 
         // Open encrypted config
-        let config_encrypted: Config;
-        if secret_path.exists() {
+        let config_encrypted = if secret_path.exists() {
             let secret_content = std::fs::read(secret_path)?;
             let pwbox = toml::from_slice(&secret_content)?;
             let pwbox = Eraser::new().add_suite::<Sodium>().restore(&pwbox)?;
 
             let decrypted = pwbox.open(password)?;
-            config_encrypted = toml::from_slice::<Config>(&decrypted)?;
+            toml::from_slice::<Config>(&decrypted)?
         } else {
-            config_encrypted = Config::new_empty();
-        }
+            Config::new_empty()
+        };
 
         let out = Config::combine(config_encrypted, config_unencrypted);
 
@@ -81,7 +80,7 @@ impl Config {
     fn combine(og: Config, new: Config) -> Config {
         /// Return a if not empty, else return b
         fn choose(a: String, b: String) -> String {
-            if a != "" {
+            if !a.is_empty() {
                 a
             } else {
                 b

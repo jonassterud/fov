@@ -11,7 +11,7 @@ use reqwest::{
 
 impl API {
     /// Get BTC UTXOs
-    pub async fn btc_utxo(&self) -> Result<Vec<btc::UTXO>> {
+    pub async fn btc_utxo(&self) -> Result<Vec<btc::Utxo>> {
         let resp = self
             .client
             .get(format!("https://btcbook.nownodes.io/api/v2/utxo/{}", self.btc_xpub))
@@ -21,7 +21,7 @@ impl API {
             .await?;
 
         match resp.status() {
-            StatusCode::OK => Ok(resp.json::<Vec<btc::UTXO>>().await?),
+            StatusCode::OK => Ok(resp.json::<Vec<btc::Utxo>>().await?),
             _ => Err(anyhow!(
                 "NOWNodes API Error.\nHTTP Code: {}\nResponse: {}",
                 resp.status(),
@@ -35,7 +35,7 @@ impl API {
     /// # Arguments
     ///
     /// * `address` - Address or XPUB
-    pub async fn ltc_utxo(&self) -> Result<Vec<ltc::UTXO>> {
+    pub async fn ltc_utxo(&self) -> Result<Vec<ltc::Utxo>> {
         let resp = self
             .client
             .get(format!("https://ltcbook.nownodes.io/api/v2/utxo/{}", self.ltc_xpub))
@@ -45,7 +45,7 @@ impl API {
             .await?;
 
         match resp.status() {
-            StatusCode::OK => Ok(resp.json::<Vec<ltc::UTXO>>().await?),
+            StatusCode::OK => Ok(resp.json::<Vec<ltc::Utxo>>().await?),
             _ => Err(anyhow!(
                 "NOWNodes API Error.\nHTTP Code: {}\nResponse: {}",
                 resp.status(),

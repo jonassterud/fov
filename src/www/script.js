@@ -34,11 +34,11 @@ function add_assets_to_table(data) {
             // Add name and description together
             let name = asset.name + (asset.description ? ` - ${asset.description}` : "");
             // Only show ticker if currency/ticker is not NOK
-            let ticker = asset.currency === "NOK" ? "" : asset.currency;
+            let ticker = asset.currency != "NOK" ? asset.currency : "";
             // Only show balance if currency/ticker is not NOK
-            let balance = asset.currency === "NOK" ? "" : asset.balance;
+            let balance = asset.currency != "NOK" ? asset.balance : "";
             // Calculate value of asset in NOK
-            let value = Math.round(asset.value) + " NOK";
+            let value = Math.round(asset.value).toLocaleString('no-NO', { style: 'currency', currency: 'NOK' });
             global_total_value += asset.value;
 
             // Add asset into table 
@@ -61,7 +61,7 @@ function add_assets_to_table(data) {
         throw new Error("Failed getting td with id: total_value");
     }
 
-    total_value_cell.innerHTML = Math.round(global_total_value) + " NOK";
+    total_value_cell.innerHTML = Math.round(global_total_value).toLocaleString('no-NO', { style: 'currency', currency: 'NOK' });
 }
 
 function load_assets(path, title) {
@@ -88,7 +88,7 @@ function create_diversification_chart() {
 
     let list_items = "";
     let prev_angle = 0;
-    global_assets.forEach(asset => {
+    global_assets.forEach((asset, i) => {
         let name = asset.name;
         let procentage = asset.value / global_total_value;
 
@@ -101,14 +101,25 @@ function create_diversification_chart() {
         // Create list item
         list_items += `<li><span style="color: ${random_color}">▣  </span>${name}</li>`;
 
+        // Fill the remaining space (due to rounding errors) if it's the last asset
+        if (i === global_assets.length - 1) {
+            let error = (Math.PI * 2) - (prev_angle + angle);
+            angle += error;
+        }
+
         // Draw pie
-        // TODO: Bug - the pie chart is not filled completely
+        const CENTER = { x: c.width / 2, y: c.height / 2 };
+        const WIDTH = c.width / 2;
+        const HEIGHT  = c.height / 2;
+
         cx.strokeStyle = "white";
         cx.fillStyle = random_color;
+
         cx.beginPath();
-        cx.arc(c.width / 2, c.height / 2, c.width / 2, prev_angle, prev_angle + angle, false);
-        cx.lineTo(c.width / 2, c.height / 2);
+        cx.arc(CENTER.x, CENTER.y, WIDTH, prev_angle, prev_angle + angle, false);
+        cx.lineTo(CENTER.x, CENTER.y);
         cx.closePath();
+
         cx.fill();
         cx.stroke();
 
