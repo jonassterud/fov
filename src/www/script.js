@@ -34,11 +34,11 @@ function add_assets_to_table(data) {
             // Add name and description together
             let name = asset.name + (asset.description ? ` - ${asset.description}` : "");
             // Only show ticker if currency/ticker is not NOK
-            let ticker = asset.currency === "NOK" ? "" : asset.currency;
+            let ticker = asset.currency != "NOK" ? asset.currency : "";
             // Only show balance if currency/ticker is not NOK
-            let balance = asset.currency === "NOK" ? "" : asset.balance;
+            let balance = asset.currency != "NOK" ? asset.balance : "";
             // Calculate value of asset in NOK
-            let value = Math.round(asset.value) + " NOK";
+            let value = Math.round(asset.value).toLocaleString('no-NO', { style: 'currency', currency: 'NOK' });
             global_total_value += asset.value;
 
             // Add asset into table 
@@ -61,7 +61,7 @@ function add_assets_to_table(data) {
         throw new Error("Failed getting td with id: total_value");
     }
 
-    total_value_cell.innerHTML = Math.round(global_total_value) + " NOK";
+    total_value_cell.innerHTML = Math.round(global_total_value).toLocaleString('no-NO', { style: 'currency', currency: 'NOK' });
 }
 
 function load_assets(path, title) {
@@ -108,12 +108,18 @@ function create_diversification_chart() {
         }
 
         // Draw pie
+        const CENTER = { x: c.width / 2, y: c.height / 2 };
+        const WIDTH = c.width / 2;
+        const HEIGHT  = c.height / 2;
+
         cx.strokeStyle = "white";
         cx.fillStyle = random_color;
+
         cx.beginPath();
-        cx.arc(c.width / 2, c.height / 2, c.width / 2, prev_angle, prev_angle + angle, false);
-        cx.lineTo(c.width / 2, c.height / 2);
+        cx.arc(CENTER.x, CENTER.y, WIDTH, prev_angle, prev_angle + angle, false);
+        cx.lineTo(CENTER.x, CENTER.y);
         cx.closePath();
+
         cx.fill();
         cx.stroke();
 
