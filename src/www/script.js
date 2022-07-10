@@ -88,7 +88,7 @@ function create_diversification_chart() {
 
     let list_items = "";
     let prev_angle = 0;
-    global_assets.forEach(asset => {
+    global_assets.forEach((asset, i) => {
         let name = asset.name;
         let procentage = asset.value / global_total_value;
 
@@ -101,8 +101,13 @@ function create_diversification_chart() {
         // Create list item
         list_items += `<li><span style="color: ${random_color}">▣  </span>${name}</li>`;
 
+        // Fill the remaining space (due to rounding errors) if it's the last asset
+        if (i === global_assets.length - 1) {
+            let error = (Math.PI * 2) - (prev_angle + angle);
+            angle += error;
+        }
+
         // Draw pie
-        // TODO: Bug - the pie chart is not filled completely
         cx.strokeStyle = "white";
         cx.fillStyle = random_color;
         cx.beginPath();
