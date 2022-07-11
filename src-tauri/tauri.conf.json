@@ -4,13 +4,20 @@
     "beforeBuildCommand": "",
     "beforeDevCommand": "",
     "devPath": "../ui",
-    "distDir": "../ui"
+    "distDir": "../ui",
+    "withGlobalTauri": true
   },
   "package": {
     "productName": "fov",
     "version": "0.1.0"
   },
   "tauri": {
+    "pattern": {
+      "use": "isolation",
+      "options": {
+        "dir": "../ui"
+      }
+    },
     "allowlist": {
       "all": true
     },
@@ -48,7 +55,7 @@
       }
     },
     "security": {
-      "csp": null
+      "csp": "script-src 'self'; style-src 'self';"
     },
     "updater": {
       "active": false
