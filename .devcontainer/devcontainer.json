@@ -1,5 +1,5 @@
 {
-	"name": "Node.js",
+	"name": "Tauri",
 	"build": {
 		"dockerfile": "Dockerfile",
 		"args": { "VARIANT": "16-bullseye" }
@@ -16,11 +16,18 @@
 			]
 		}
 	},
-	"forwardPorts": [6080],
+	"forwardPorts": [6080], // for desktop-lite
 	"postCreateCommand": "yarn install",
 	"remoteUser": "node",
 	"features": {
-		"rust": "latest",
-		"desktop-lite": "latest" // password is vscode
-	}
+		"rust": "latest"
+		//"desktop-lite": "latest" // password is vscode
+	},
+	// If you want to use your actual display
+	"containerEnv": {
+        "DISPLAY": "unix:1" // check with "echo $DISPLAY"
+    },
+    "mounts": [
+        "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind,consistency=cached"
+	]
 }
