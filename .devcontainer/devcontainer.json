@@ -1,34 +1,25 @@
 {
-	"name": "Rust",
+	"name": "Node.js",
 	"build": {
 		"dockerfile": "Dockerfile",
-		"args": {
-			"VARIANT": "buster"
-		}
+		"args": { "VARIANT": "16-bullseye" }
 	},
-	"runArgs": [
-		"--cap-add=SYS_PTRACE",
-		"--security-opt",
-		"seccomp=unconfined"
-	],
 	"customizations": {
 		"vscode": {
-			"settings": { 
-				"lldb.executable": "/usr/bin/lldb",
-				"files.watcherExclude": {
-					"**/target/**": true
-				},
-				"rust-analyzer.checkOnSave.command": "clippy"
-			},
 			"extensions": [
-				"vadimcn.vscode-lldb",
-				"mutantdino.resourcemonitor",
+				"dbaeumer.vscode-eslint",
 				"rust-lang.rust-analyzer",
+				"mutantdino.resourcemonitor",
 				"tamasfe.even-better-toml",
-				"serayuzgur.crates"
+				"serayuzgur.crates",
+				"vadimcn.vscode-lldb"
 			]
 		}
 	},
-	//"forwardPorts": [],
-	"remoteUser": "vscode"
+	// "forwardPorts": [],
+	// "postCreateCommand": "yarn install",
+	"remoteUser": "node",
+	"features": {
+		"rust": "latest"
+	}
 }
