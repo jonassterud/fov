@@ -3,7 +3,7 @@
   "build": {
     "beforeBuildCommand": "",
     "beforeDevCommand": "",
-    "devPath": "../url",
+    "devPath": "../ui",
     "distDir": "../ui"
   },
   "package": {
