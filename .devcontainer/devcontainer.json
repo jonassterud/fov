@@ -17,7 +17,7 @@
 		}
 	},
 	// "forwardPorts": [],
-	"postCreateCommand": "yarn add -D @tauri-apps/cli",
+	"postCreateCommand": "yarn install",
 	"remoteUser": "node",
 	"features": {
 		"rust": "latest"
