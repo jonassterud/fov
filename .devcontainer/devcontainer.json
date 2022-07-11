@@ -16,10 +16,11 @@
 			]
 		}
 	},
-	// "forwardPorts": [],
+	"forwardPorts": [6080],
 	"postCreateCommand": "yarn install",
 	"remoteUser": "node",
 	"features": {
-		"rust": "latest"
+		"rust": "latest",
+		"desktop-lite": "latest" // password is vscode
 	}
 }
