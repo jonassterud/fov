@@ -3,9 +3,9 @@
     windows_subsystem = "windows"
 )]
 
+mod bindings;
 mod commands;
 mod portfolio;
-mod bindings;
 
 use commands::*;
 use portfolio::SharedPortfolio;

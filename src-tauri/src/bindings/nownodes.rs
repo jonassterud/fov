@@ -1,5 +1,3 @@
 use crate::portfolio::Asset;
 
-pub struct NowNodes {
-    
-}
+pub struct NowNodes {}

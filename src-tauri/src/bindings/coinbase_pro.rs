@@ -1,5 +1,3 @@
 use crate::portfolio::Asset;
 
-pub struct CoinbasePro {
-
-}
+pub struct CoinbasePro {}
