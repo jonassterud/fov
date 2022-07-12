@@ -1,7 +1,7 @@
 mod asset;
 mod config;
 
-use std::sync::Mutex;
+use tauri::async_runtime::Mutex;
 
 pub use asset::Asset;
 pub use config::Config;
