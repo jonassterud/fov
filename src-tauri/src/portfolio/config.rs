@@ -1,4 +1,7 @@
+use serde::{Deserialize, Serialize};
+
 //#[derive(Debug)]
+#[derive(Deserialize, Serialize)]
 pub struct Config {
     pub sparebank_1_access_token: Option<String>,
     pub coinbase_pro_key: Option<String>,

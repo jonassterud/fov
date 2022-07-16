@@ -2,11 +2,13 @@ mod asset;
 mod config;
 
 use tauri::async_runtime::Mutex;
+use serde::{Deserialize, Serialize};
 
 pub use asset::Asset;
 pub use config::Config;
 
 //#[derive(Debug)]
+#[derive(Deserialize, Serialize)]
 pub struct Portfolio {
     pub assets: Vec<Asset>,
     pub config: Config,

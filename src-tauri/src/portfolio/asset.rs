@@ -1,6 +1,6 @@
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 
-#[derive(Serialize)]
+#[derive(Deserialize, Serialize)]
 //#[derive(Debug)]
 pub struct Asset {
     pub name: String,
