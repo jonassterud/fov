@@ -778,11 +778,14 @@ name = "fov"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "base64",
+ "hmac",
  "pwbox",
  "rand 0.8.5",
  "reqwest",
  "serde",
  "serde_json",
+ "sha2",
  "tauri",
  "tauri-build",
  "toml",
