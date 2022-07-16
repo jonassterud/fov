@@ -1,0 +1,56 @@
+:root {
+    --background-color-0: #262729;
+    --background-color-1: #46484d;
+    --background-color-2: #64676e;
+    --text-color: #e5e6cf;
+}
+
+html, body {
+    padding: 0;
+    margin: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    background-color: var(--background-color-0);
+}
+
+p, span, a, label, h1, h2, h3, h4, h5, h6 {
+    color: var(--text-color);
+}
+
+header {
+    height: 10%;
+}
+
+main {
+    height: 80%;
+}
+
+footer {
+    height: 5%;
+}
+
+/* Form styling */
+
+main.configuration {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#submit-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+}
+
+#submit-form div {
+    margin: 5px;
+}

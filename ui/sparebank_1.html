@@ -6,8 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="css/shared.css">
         <script src="js/isolation.js"></script>
-        <script src="js/index.js"></script>
-        <title>FOV - Home</title>
+        <script src="js/sparebank_1.js"></script>
+        <title>FOV - SpareBank 1 configuration</title>
     </head>
     <body>
         <header>
@@ -16,9 +16,17 @@
             <a href="coinbase_pro.html">Coinbase Pro</a>
             <a href="nownodes.html">NOWNodes</a>
         </header>
-        <main>
-            <h1>Welcome from Tauri!!</h1>
-
+        <main class="configuration">
+            <h1>SpareBank 1 configuration</h1>
+            <div id="submit-form">
+                <div>
+                    <label for="access-token">OAuth access token: </label>
+                    <input type="password" name="access-token" id="access-token">
+                </div>
+                <div>
+                    <button type="button" id="submit-button">Submit</button>
+                </div>
+            </div>
         </main>
         <footer>
             <a target="_blank" rel="noopener noreferrer" href="https://github.com/jonassterud/fov">Source code</a>
