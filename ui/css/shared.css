@@ -28,6 +28,11 @@ header {
     height: 10%;
 }
 
+header a {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
 main {
     height: 80%;
 }
