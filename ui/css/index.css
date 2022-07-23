@@ -1,0 +1,23 @@
+#controls {
+    display: flex;
+    flex-direction: column;
+
+    position: absolute;
+    right: 0;
+    top: 25%;
+    
+    border-left: 1px dashed white;
+    border-top: 1px dashed white;
+    border-bottom: 1px dashed white;
+}
+
+#controls button {
+    margin: 10px;
+    padding: 5px;
+
+    box-shadow: 5px 5px var(--shadow-color);
+}
+
+#controls button:hover {
+    cursor: pointer;
+}
