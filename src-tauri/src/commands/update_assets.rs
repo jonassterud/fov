@@ -23,7 +23,10 @@ pub async fn update_assets(state: State<'_, SharedPortfolio>) -> Result<(), ()> 
         let key = portfolio.config.coinbase_pro_key.as_ref().unwrap();
         let secret = portfolio.config.coinbase_pro_secret.as_ref().unwrap();
         let passphrase = portfolio.config.coinbase_pro_passphrase.as_ref().unwrap();
-        let mut assets = CoinbasePro::new().get_assets(key, secret, passphrase).await.unwrap();
+        let mut assets = CoinbasePro::new()
+            .get_assets(key, secret, passphrase)
+            .await
+            .unwrap();
 
         portfolio.assets.append(&mut assets);
     }
@@ -33,7 +36,10 @@ pub async fn update_assets(state: State<'_, SharedPortfolio>) -> Result<(), ()> 
         let key = portfolio.config.nownodes_key.as_ref().unwrap();
         let btc_addresses = portfolio.config.btc_addresses.as_ref().unwrap().clone();
         let ltc_addresses = portfolio.config.ltc_addresses.as_ref().unwrap().clone();
-        let mut assets = NowNodes::new().get_assets(key, btc_addresses, ltc_addresses).await.unwrap();
+        let mut assets = NowNodes::new()
+            .get_assets(key, btc_addresses, ltc_addresses)
+            .await
+            .unwrap();
 
         portfolio.assets.append(&mut assets);
     }
