@@ -2,10 +2,10 @@ mod models;
 mod paths;
 
 use crate::portfolio::Asset;
-use std::time::{UNIX_EPOCH, SystemTime};
 use anyhow::{anyhow, Result};
 use hmac::{Hmac, Mac};
 use sha2::Sha256;
+use std::time::{SystemTime, UNIX_EPOCH};
 
 pub struct CoinbasePro {}
 
@@ -16,7 +16,12 @@ impl CoinbasePro {
     }
 
     /// Get assets
-    pub async fn get_assets(&self, key: &str, secret: &str, passphrase: &str) -> Result<Vec<Asset>> {
+    pub async fn get_assets(
+        &self,
+        key: &str,
+        secret: &str,
+        passphrase: &str,
+    ) -> Result<Vec<Asset>> {
         let accounts = self.accounts(key, secret, passphrase).await?;
         let mut assets = vec![];
 
@@ -35,11 +40,21 @@ impl CoinbasePro {
 
     /// Get UNIX timestamp in seconds as string
     fn access_timestamp(&self) -> Result<String> {
-        Ok(SystemTime::now().duration_since(UNIX_EPOCH)?.as_secs().to_string())
+        Ok(SystemTime::now()
+            .duration_since(UNIX_EPOCH)?
+            .as_secs()
+            .to_string())
     }
 
     /// Get access sign
-    fn access_sign(&self, timestamp: &str, method: &str, request_path: &str, body: &str, secret: &str) -> Result<String> {
+    fn access_sign(
+        &self,
+        timestamp: &str,
+        method: &str,
+        request_path: &str,
+        body: &str,
+        secret: &str,
+    ) -> Result<String> {
         let message = format!("{}{}{}{}", timestamp, method, request_path, body);
         let secret_decoded = base64::decode(secret)?;
         let mut hmac: Hmac<Sha256> = Hmac::new_from_slice(&secret_decoded)?;

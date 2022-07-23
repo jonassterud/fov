@@ -1,10 +1,13 @@
 use crate::portfolio::{Portfolio, SharedPortfolio};
-use pwbox::{sodium::Sodium, Eraser};
 use anyhow::Result;
+use pwbox::{sodium::Sodium, Eraser};
 use tauri::State;
 
 #[tauri::command]
-pub async fn unlock_portfolio(state: State<'_, SharedPortfolio>, password: String) -> Result<(), ()> {
+pub async fn unlock_portfolio(
+    state: State<'_, SharedPortfolio>,
+    password: String,
+) -> Result<(), ()> {
     let mut portfolio = state.0.lock().await;
 
     let content = std::fs::read("portfolio.toml").unwrap();

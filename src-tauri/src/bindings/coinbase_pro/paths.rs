@@ -1,9 +1,17 @@
 use super::{models, CoinbasePro};
 use anyhow::{anyhow, Result};
-use reqwest::{header::{self, HeaderName}, StatusCode};
+use reqwest::{
+    header::{self, HeaderName},
+    StatusCode,
+};
 
 impl CoinbasePro {
-    pub async fn accounts(&self, key: &str, secret: &str, passphrase: &str,) -> Result<Vec<models::Account>> {
+    pub async fn accounts(
+        &self,
+        key: &str,
+        secret: &str,
+        passphrase: &str,
+    ) -> Result<Vec<models::Account>> {
         let client = reqwest::Client::new(); // TODO: big performance hit?
 
         let timestamp = self.access_timestamp()?;
@@ -11,7 +19,10 @@ impl CoinbasePro {
             .get("https://api.exchange.coinbase.com/accounts")
             .header(header::ACCEPT, "application/json")
             .header(HeaderName::from_bytes(b"CB-ACCESS-KEY")?, key)
-            .header(HeaderName::from_bytes(b"CB-ACCESS-TIMESTAMP")?, &timestamp.clone())
+            .header(
+                HeaderName::from_bytes(b"CB-ACCESS-TIMESTAMP")?,
+                &timestamp.clone(),
+            )
             .header(HeaderName::from_bytes(b"CB-ACCESS-PASSPHRASE")?, passphrase)
             .header(
                 HeaderName::from_bytes(b"CB-ACCESS-SIGN")?,

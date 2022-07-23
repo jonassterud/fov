@@ -1,8 +1,8 @@
 mod asset;
 mod config;
 
-use tauri::async_runtime::Mutex;
 use serde::{Deserialize, Serialize};
+use tauri::async_runtime::Mutex;
 
 pub use asset::Asset;
 pub use config::Config;
