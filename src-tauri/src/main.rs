@@ -14,6 +14,15 @@ fn main() {
     // TODO: The portfolio is used inside a `tauri::State<>`. Is this safe?
     let shared_portfolio = SharedPortfolio::new();
 
+    // Create configuration directories if they dont exist
+    let mut config_dir = dirs::config_dir().unwrap();
+    config_dir.push("fov");
+
+    if !config_dir.is_dir() {
+        std::fs::create_dir(config_dir).unwrap();
+    }
+
+    // Start app
     tauri::Builder::default()
         .manage(shared_portfolio)
         .invoke_handler(tauri::generate_handler!(
