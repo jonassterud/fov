@@ -2,7 +2,7 @@ mod models;
 mod paths;
 
 use crate::portfolio::Asset;
-use anyhow::{anyhow, Result};
+use anyhow::Result;
 
 pub struct SpareBank1 {}
 
@@ -14,7 +14,7 @@ impl SpareBank1 {
 
     /// Get assets
     pub async fn get_assets(&self, access_token: &str) -> Result<Vec<Asset>> {
-        let accounts = self.accounts(&access_token).await?.accounts;
+        let accounts = self.accounts(access_token).await?.accounts;
         let mut assets = vec![];
 
         for account in accounts {

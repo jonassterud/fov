@@ -2,7 +2,7 @@ mod models;
 mod paths;
 
 use crate::portfolio::Asset;
-use anyhow::{anyhow, Result};
+use anyhow::Result;
 
 pub struct NowNodes {}
 

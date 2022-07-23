@@ -2,7 +2,7 @@ mod models;
 mod paths;
 
 use crate::portfolio::Asset;
-use anyhow::{anyhow, Result};
+use anyhow::Result;
 use hmac::{Hmac, Mac};
 use sha2::Sha256;
 use std::time::{SystemTime, UNIX_EPOCH};
