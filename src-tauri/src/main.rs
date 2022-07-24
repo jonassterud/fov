@@ -37,6 +37,7 @@ fn main() {
             update_assets,
             lock_portfolio,
             unlock_portfolio,
+            get_portfolio_names,
         ))
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
