@@ -1,12 +1,12 @@
 mod asset;
 mod config;
 
-use std::path::PathBuf;
-use serde::{Deserialize, Serialize};
-use tauri::async_runtime::Mutex;
+use anyhow::Result;
 use pwbox::{sodium::Sodium, ErasedPwBox, Eraser, Suite};
 use rand::thread_rng;
-use anyhow::Result;
+use serde::{Deserialize, Serialize};
+use std::path::PathBuf;
+use tauri::async_runtime::Mutex;
 
 pub use asset::Asset;
 pub use config::Config;
@@ -14,6 +14,7 @@ pub use config::Config;
 //#[derive(Debug)]
 #[derive(Deserialize, Serialize)]
 pub struct Portfolio {
+    pub name: Option<String>,
     pub assets: Vec<Asset>,
     pub config: Config,
 }
@@ -24,7 +25,7 @@ impl Portfolio {
     pub fn get_save_path() -> Result<PathBuf> {
         let mut save_path = dirs::config_dir().unwrap();
         save_path.push("fov");
-        
+
         if !save_path.is_dir() {
             std::fs::create_dir(&save_path)?;
         }
@@ -35,6 +36,7 @@ impl Portfolio {
     /// Create an empty `Portfolio`
     pub fn new() -> Portfolio {
         Portfolio {
+            name: None,
             assets: vec![],
             config: Config::new(),
         }
@@ -43,7 +45,7 @@ impl Portfolio {
     /// Open portfolio with the given name
     pub fn open(name: &str, password: &str) -> Result<Portfolio> {
         let mut path = Portfolio::get_save_path()?;
-        path.push(name);
+        path.push(format!("{}.toml", name));
         let content = std::fs::read(path)?;
         let pwbox = toml::from_slice(&content)?;
         let pwbox = Eraser::new().add_suite::<Sodium>().restore(&pwbox)?;
@@ -54,12 +56,11 @@ impl Portfolio {
         Ok(portfolio)
     }
 
-    /// Save portfolio with the given name
-    pub fn save(&self, name: &str, password: &str) -> Result<()> {
+    /// Save portfolio
+    pub fn save(&self, password: &str) -> Result<()> {
         let mut path = Portfolio::get_save_path()?;
-        path.push(name);
-        let pwbox = Sodium::build_box(&mut thread_rng())
-            .seal(password, toml::to_string(self)?)?;
+        path.push(format!("{}.toml", &self.name.as_ref().unwrap()));
+        let pwbox = Sodium::build_box(&mut thread_rng()).seal(password, toml::to_string(self)?)?;
         let mut eraser = Eraser::new();
         eraser.add_suite::<Sodium>();
         let erased: ErasedPwBox = eraser.erase(&pwbox)?;

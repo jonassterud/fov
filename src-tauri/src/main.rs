@@ -35,9 +35,10 @@ fn main() {
             set_ltc_addresses,
             get_assets,
             update_assets,
-            lock_portfolio,
-            unlock_portfolio,
+            save_portfolio,
+            load_portfolio,
             get_portfolio_names,
+            new_portfolio,
         ))
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

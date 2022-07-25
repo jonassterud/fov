@@ -3,7 +3,7 @@ use anyhow::Result;
 use tauri::State;
 
 #[tauri::command]
-pub async fn unlock_portfolio(
+pub async fn load_portfolio(
     state: State<'_, SharedPortfolio>,
     name: String,
     password: String,
