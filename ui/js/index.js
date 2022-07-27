@@ -34,3 +34,10 @@ function save_portfolio() {
 function refresh_portfolio() {
     invoke("update_assets");
 }
+
+function display_portfolio() {
+    invoke("get_assets").then((assets) => {
+        let object = JSON.parse(assets);
+        console.log(object);
+    });
+}
