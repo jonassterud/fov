@@ -31,7 +31,7 @@ impl NowNodes {
             };
 
             for utxo in self.btc_utxo(key, &btc_address).await? {
-                btc_asset.balance += utxo.value.parse::<f64>()?;
+                btc_asset.balance += utxo.value.parse::<f64>()? / 100000000.0;
             }
 
             assets.push(btc_asset);
@@ -47,7 +47,7 @@ impl NowNodes {
             };
 
             for utxo in self.ltc_utxo(key, &ltc_address).await? {
-                ltc_asset.balance += utxo.value.parse::<f64>()?;
+                ltc_asset.balance += utxo.value.parse::<f64>()? / 100000000.0;
             }
 
             assets.push(ltc_asset);
