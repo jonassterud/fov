@@ -26,13 +26,15 @@ impl CoinbasePro {
         let mut assets = vec![];
 
         for account in accounts {
-            assets.push(Asset {
-                name: account.id,
-                description: "".into(),
-                balance: account.balance.parse()?,
-                currency: account.currency,
-                value: 0, // TODO (make it possible to choose currency in frontend)
-            });
+            if account.currency.parse::<f64>()? > 0.0 {
+                assets.push(Asset {
+                    name: account.id,
+                    description: "".into(),
+                    balance: account.balance.parse()?,
+                    currency: account.currency,
+                    value: 0, // TODO (make it possible to choose currency in frontend)
+                });
+            }
         }
 
         Ok(assets)
