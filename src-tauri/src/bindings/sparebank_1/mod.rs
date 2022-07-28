@@ -19,6 +19,7 @@ impl SpareBank1 {
 
         for account in accounts {
             assets.push(Asset {
+                tag: "NOWNodes".into(),
                 name: account.name,
                 description: account.description,
                 balance: account.balance,

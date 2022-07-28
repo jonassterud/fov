@@ -32,6 +32,7 @@ impl CoinbasePro {
             }
 
             assets.push(Asset {
+                tag: "Coinbase Pro".into(),
                 name: account.id,
                 description: "".into(),
                 balance: account.balance.parse()?,

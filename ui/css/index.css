@@ -21,3 +21,22 @@
 #controls button:hover {
     cursor: pointer;
 }
+
+table {
+    border: 1px solid var(--table-border-color);
+    border-collapse: collapse;
+}
+
+td, th {
+    border: 1px solid var(--table-border-color);
+    padding: 10px;
+}
+
+thead {
+    background-color: var(--background-color-2);
+}
+
+tfoot {
+    background-color: var(--background-color-1);
+    font-style: italic;
+}

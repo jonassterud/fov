@@ -19,7 +19,25 @@
         </header>
         <main>
             <div id="overview">
-                <h2>overview</h2>
+                <table>
+                    <thead>
+                        <th></th>
+                        <th scope="col" id="name">Name</th>
+                        <th scope="col" id="ticker">Ticker</th>
+                        <th scope="col" id="balance">Balance</th>
+                        <th scope="col" id="value">Value</th>
+                    </thead>
+                    <tbody id="asset-table"></tbody>
+                    <tfoot>
+                        <tr>
+                            <th scope="row">Totals</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td id="total_value"></td>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
             <div id="controls">
                 <button id="new-button">New Portfolio</button>

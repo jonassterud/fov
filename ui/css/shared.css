@@ -1,8 +1,9 @@
 :root {
-    --shadow-color: #161618;
     --background-color-0: #262729;
     --background-color-1: #46484d;
     --background-color-2: #64676e;
+    --table-border-color: #999999;
+    --shadow-color: #161618;
     --text-color: #e5e6cf;
 }
 
@@ -21,7 +22,7 @@ html, body {
     background-color: var(--background-color-0);
 }
 
-p, span, a, label, h1, h2, h3, h4, h5, h6 {
+p, span, a, label, h1, h2, h3, h4, h5, h6, table {
     color: var(--text-color);
 }
 

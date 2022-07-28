@@ -23,6 +23,7 @@ impl NowNodes {
 
         for btc_address in btc_addresses {
             let mut btc_asset = Asset {
+                tag: "NOWNodes".into(),
                 name: "Bitcoin".into(),
                 description: "".into(),
                 balance: 0.0,
@@ -39,6 +40,7 @@ impl NowNodes {
 
         for ltc_address in ltc_addresses {
             let mut ltc_asset = Asset {
+                tag: "NOWNodes".into(),
                 name: "Litecoin".into(),
                 description: "".into(),
                 balance: 0.0,
